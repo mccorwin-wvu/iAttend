@@ -8,6 +8,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.WVU.iAttend.UserHomePageActivity">
+    tools:context="com.WVU.iAttend.UserHomePageActivity"
+    android:background="@color/colorPrimaryDark">
+
+
+    <TextView
+        android:text="User Home Test"
+        android:id="@+id/userHomeTitle"
+        android:textSize="40sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:layout_marginTop="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColorLink="@android:color/holo_blue_bright"
+        android:textColor="@android:color/holo_orange_dark"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:textAllCaps="false" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="53dp"
+        android:id="@+id/userHomeEmail"
+        android:layout_below="@+id/regText"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:layout_marginTop="46dp"
+        android:id="@+id/userHomePass"
+        android:layout_below="@+id/userHomeEmail"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

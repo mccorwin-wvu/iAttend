@@ -3,6 +3,8 @@ package com.WVU.iAttend;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -36,6 +38,13 @@ public class RegisterActivity extends AppCompatActivity {
         regButtonv.setTypeface(mytypeface);
 
 
+        final EditText firstNameText = (EditText) findViewById(R.id.regFirstName);
+        final EditText lastNameText = (EditText) findViewById(R.id.regLastName);
+        final EditText emailText = (EditText) findViewById(R.id.regEmail);
+        final EditText passText = (EditText) findViewById(R.id.regPassword);
+        final EditText passConText = (EditText) findViewById(R.id.regPasswordCon);
+
+        final Button buttonRegister = (Button) findViewById(R.id.regButton);
 
     }
 }

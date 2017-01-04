@@ -26,5 +26,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.volley:volley:1.0.0'
+    compile 'joda-time:joda-time:2.9.7'
     testCompile 'junit:junit:4.12'
 }
