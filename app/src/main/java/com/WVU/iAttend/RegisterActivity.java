@@ -143,7 +143,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 RegisterActivity.this.startActivity(intent);
                             }else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                builder.setMessage("LOGIN FAIL").setNegativeButton("Retry",null).create().show();
+                                builder.setMessage("Email is already Registered").setNegativeButton("Retry",null).create().show();
                             }
 
 
