@@ -27,5 +27,24 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.volley:volley:1.0.0'
     compile 'joda-time:joda-time:2.9.7'
+    //compile 'javax.mail:mail:1.4.7'
     testCompile 'junit:junit:4.12'
+}
+
+android {
+    packagingOptions {
+        pickFirst 'META-INF/LICENSE.txt' // picks the JavaMail license file
+    }
+}
+
+repositories {
+    jcenter()
+    maven {
+        url "https://maven.java.net/content/groups/public/"
+    }
+}
+
+dependencies {
+    compile 'com.sun.mail:android-mail:1.5.5'
+    compile 'com.sun.mail:android-activation:1.5.5'
 }

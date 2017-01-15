@@ -5,10 +5,12 @@ import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -16,6 +18,9 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -54,6 +59,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText passText = (EditText) findViewById(R.id.regPassword);
         final EditText passConText = (EditText) findViewById(R.id.regPasswordCon);
 
+
         final Button buttonRegister = (Button) findViewById(R.id.regButton);
 
 
@@ -61,11 +67,13 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 boolean noError = true;
+                CodeGenerator regCode = new CodeGenerator();
                 final String first_name = firstNameText.getText().toString();
                 final String last_name = lastNameText.getText().toString();
                 final String email = emailText.getText().toString();
                 final String password = passText.getText().toString();
                 final String password_con = passConText.getText().toString();
+                final String register_code = regCode.nextCode().toString();
 
                 if(first_name.length()<1){
                     noError = false;
@@ -104,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
                 else if(!password.equals(password_con)){
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage(password +"  "+ password_con).setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Passwords Do Not Match").setNegativeButton("Retry",null).create().show();
                 }
                 else if(!first_name.matches("[a-zA-Z]+")){
                     noError = false;
@@ -139,8 +147,18 @@ public class RegisterActivity extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
 
                             if(success){
-                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                Intent intent = new Intent(RegisterActivity.this, ConfirmNewUser.class);
                                 RegisterActivity.this.startActivity(intent);
+
+                                new SendMailTask(RegisterActivity.this).execute("iattend.no.respond@gmail.com",
+                                        "iattend@wvu",email,"REGISTER CODE FOR iAttend", "Register code: "+register_code);
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "Please check your email for a confirmation code.",
+                                        Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+
+
                             }else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                                 builder.setMessage("Email is already Registered").setNegativeButton("Retry",null).create().show();
@@ -159,7 +177,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                 if(noError == true){
-                RegisterRequest registerRequest = new RegisterRequest(first_name,last_name,email,password,responseListener);
+                RegisterRequest registerRequest = new RegisterRequest(first_name,last_name,email,password, register_code, responseListener);
 
                 RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
                 queue.add(registerRequest);}
