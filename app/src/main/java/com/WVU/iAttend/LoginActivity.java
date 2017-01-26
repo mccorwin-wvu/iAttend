@@ -6,11 +6,14 @@ import android.support.v4.widget.TextViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -46,10 +49,26 @@ public class LoginActivity extends AppCompatActivity {
         TextView logingRegv = (TextView) findViewById(R.id.logingReg);
         logingRegv.setTypeface(mytypeface);
 
+        TextView forgotPasswordHomePagev = (TextView) findViewById(R.id.forgotPasswordHomePage);
+        forgotPasswordHomePagev.setTypeface(mytypeface);
+
         final EditText loginEmail = (EditText) findViewById(R.id.logingEmailBox);
         final EditText loginPass = (EditText) findViewById(R.id.logingPassBox);
         final Button loginButton = (Button) findViewById(R.id.logingButton);
         final TextView registerText = (TextView) findViewById(R.id.logingReg);
+        final TextView forgotPasswordText = (TextView) findViewById(R.id.forgotPasswordHomePage);
+
+
+
+
+        forgotPasswordText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgotPasswordIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                LoginActivity.this.startActivity(forgotPasswordIntent);
+            }
+        });
+
 
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,13 +104,28 @@ public class LoginActivity extends AppCompatActivity {
                             String first_name = jsonResponse.getString("first_name");
                             String last_name = jsonResponse.getString("last_name");
                             String email = jsonResponse.getString("email");
+                            int confirmed  = jsonResponse.getInt("confirmed");
+                            if(confirmed == 0){
 
-                            Intent intent = new Intent(LoginActivity.this, UserHomePageActivity.class);
-                            intent.putExtra("first_name",first_name);
-                            intent.putExtra("last_name",last_name);
-                            intent.putExtra("email",email);
+                                Intent intent = new Intent(LoginActivity.this,ConfirmNewUser.class);
 
-                            LoginActivity.this.startActivity(intent);
+                                LoginActivity.this.startActivity(intent);
+
+                                Toast toast = Toast.makeText(getApplicationContext(), "Please confirm your account before logging in.",
+                                        Toast.LENGTH_LONG);
+                                toast.setGravity(Gravity.CENTER, 0, 0);
+                                toast.show();
+
+
+                            }
+                            else {
+                                Intent intent = new Intent(LoginActivity.this, UserHomePageActivity.class);
+                                intent.putExtra("first_name", first_name);
+                                intent.putExtra("last_name", last_name);
+                                intent.putExtra("email", email);
+
+                                LoginActivity.this.startActivity(intent);
+                            }
 
                         }
 

@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".UserHomePageActivity" />
-        <activity android:name=".ConfirmNewUser"></activity>
+        <activity android:name=".ConfirmNewUser" />
+        <activity android:name=".ForgotPasswordActivity"></activity>
     </application>
 
 </manifest>
