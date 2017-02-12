@@ -1,5 +1,7 @@
 package com.WVU.iAttend;
 
+import android.app.Activity;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,80 +10,84 @@ import java.util.List;
  */
 
 public class User {
+    private int user_id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    private List<Long> studentOf = new ArrayList<Long>();
-    private List<Long> professorOf = new ArrayList<Long>();
-    private List<AttendanceRecord> attendanceRec = new ArrayList<AttendanceRecord>();
-    private long lastLoggedLocationLong;
-    private long LastLoggedLocationLat;
+    private int confirmed;
+    private String register_code;
+    private String device_code;
+    private String admin_class_list;
+    private String user_class_list;
 
-
-    public User(String firstName,String lastName, String email, String password){
-        studentOf = null;
-        professorOf = null;
-        lastLoggedLocationLong = 0;
-        LastLoggedLocationLat = 0;
-
-
+    public int getUser_id() {
+        return user_id;
     }
 
     public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public int getConfirmed() {
+        return confirmed;
+    }
+
+    public String getRegister_code() {
+        return register_code;
+    }
+
+    public String getDevice_code() {
+        return device_code;
+    }
+
+    public String getAdmin_class_list() {
+        return admin_class_list;
+    }
+
+    public String getUser_class_list() {
+        return user_class_list;
+    }
+
+    public User(int user_id, String firstName, String lastName, String email, String password,
+                int confirmed, String register_code, String device_code, String admin_class_list, String user_class_list ){
+
+        this.user_id = user_id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
         this.password = password;
+        this.confirmed = confirmed;
+        this.register_code=register_code;
+        this.device_code = device_code;
+        this.admin_class_list = admin_class_list;
+        this.user_class_list = user_class_list;
+
+
+
+
+
+
     }
 
-    public long getLastLoggedLocationLong() {
-        return lastLoggedLocationLong;
-    }
 
-    public void setLastLoggedLocationLong(Long lastLoggedLocationLong) {
-       this.lastLoggedLocationLong = lastLoggedLocationLong;
-    }
 
-    public long getLastLoggedLocationLat() {
-        return LastLoggedLocationLat;
-    }
 
-    public void setLastLoggedLocationLat(Long lastLoggedLocationLat) {
-        this.LastLoggedLocationLat = lastLoggedLocationLat;
-    }
 
-    public List<AttendanceRecord> getAttendanceRec() {
-        return attendanceRec;
-    }
 
-    public void setAttendanceRec(List<AttendanceRecord> AttendanceRec) {
-        this.attendanceRec = AttendanceRec;
-    }
+
+
 
 }

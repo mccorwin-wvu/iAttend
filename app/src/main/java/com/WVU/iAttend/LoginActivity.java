@@ -100,11 +100,18 @@ public class LoginActivity extends AppCompatActivity {
 
                         if(success){
 
-
+                            int user_id = jsonResponse.getInt("user_id");
                             String first_name = jsonResponse.getString("first_name");
                             String last_name = jsonResponse.getString("last_name");
                             String email = jsonResponse.getString("email");
+                            String password = jsonResponse.getString("password");
                             int confirmed  = jsonResponse.getInt("confirmed");
+                            String register_code = jsonResponse.getString("register_code");
+                            String device_code = jsonResponse.getString("device_code");
+                            String admin_class_list = jsonResponse.getString("admin_class_list");
+                            String user_class_list = jsonResponse.getString("user_class_list");
+
+
                             if(confirmed == 0){
 
                                 Intent intent = new Intent(LoginActivity.this,ConfirmNewUser.class);
@@ -120,9 +127,17 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             else {
                                 Intent intent = new Intent(LoginActivity.this, UserHomePageActivity.class);
+                                intent.putExtra("user_id", user_id);
                                 intent.putExtra("first_name", first_name);
                                 intent.putExtra("last_name", last_name);
                                 intent.putExtra("email", email);
+                                intent.putExtra("password", password);
+                                intent.putExtra("confirmed", confirmed);
+                                intent.putExtra("register_code", register_code);
+                                intent.putExtra("device_code", device_code);
+                                intent.putExtra("admin_class_list", admin_class_list);
+                                intent.putExtra("user_class_list", user_class_list);
+
 
                                 LoginActivity.this.startActivity(intent);
                             }

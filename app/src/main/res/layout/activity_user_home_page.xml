@@ -12,55 +12,161 @@
     android:background="@color/colorPrimaryDark">
 
 
+
+
     <TextView
-        android:text="User Home Test"
-        android:id="@+id/userHomeTitle"
+        android:text="Home"
+        android:id="@+id/user_home_text"
         android:textSize="40sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:layout_marginTop="4dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:textColorLink="@android:color/holo_blue_bright"
         android:textColor="@android:color/holo_orange_dark"
         style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
-    <EditText
+    <Button
+        android:text="Refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_marginTop="45dp"
-        android:id="@+id/userHomeFirstName"
-        android:layout_below="@+id/userHomeTitle"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/colorAccent" />
+        android:textSize="15dp"
+        android:id="@+id/user_home_refresh"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingTop="2dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/colorAccent"
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_marginTop="67dp"
-        android:id="@+id/userHomeLastName"
-        android:layout_below="@+id/userHomeFirstName"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/colorAccent"/>
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:layout_marginTop="69dp"
-        android:id="@+id/userHomeEmail"
-        android:layout_below="@+id/userHomeLastName"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/user_home_refresh"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/colorAccent"/>
+        android:layout_marginTop="13dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:text="My Classes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="78dp"
+                android:textSize="25dp"
+                android:id="@+id/UserHomeMyClasses"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent" />
+
+            <Button
+                android:text="Joined Classes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="78dp"
+                android:textSize="25dp"
+                android:id="@+id/UserHomeJoinedClasses"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent" />
+
+            <Button
+                android:text="Create A Class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="78dp"
+                android:textSize="25dp"
+                android:id="@+id/UserHomeCreateAClass"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent" />
+
+
+
+            <Button
+                android:text="Join A Class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="78dp"
+                android:textSize="25dp"
+                android:id="@+id/UserHomeJoinAClass"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent" />
+
+
+            <Button
+                android:text="Register Device"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="78dp"
+                android:textSize="25dp"
+                android:id="@+id/UserHomeRegisterDevice"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent" />
+
+            <Button
+                android:text="Change Password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="78dp"
+                android:textSize="25dp"
+                android:id="@+id/UserHomeChangePassword"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent" />
+
+            <Button
+                android:text="Logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="78dp"
+                android:textSize="25dp"
+                android:id="@+id/UserHomeLogout"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent" />
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
 
 </RelativeLayout>
