@@ -19,7 +19,17 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+
 public class ChangePasswordActivity extends AppCompatActivity {
+    int user_id_home;
+    public void onBackPressed()
+    {
+        Intent intent = new Intent(ChangePasswordActivity.this, UserHomePageActivity.class);
+        intent.putExtra("user_id", user_id_home);
+        ChangePasswordActivity.this.startActivity(intent);
+
+        //super.onBackPressed();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +64,8 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         final String oldPassword = intent.getStringExtra("password");
         final int user_id = intent.getIntExtra("user_id",0);
+
+        user_id_home = user_id;
 
 
 

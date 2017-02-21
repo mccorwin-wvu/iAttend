@@ -84,15 +84,15 @@ public class UserHomePageActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         final int user_id = intent.getIntExtra("user_id", 0);
-        String first_name = intent.getStringExtra("first_name");
-        String last_name = intent.getStringExtra("last_name");
+        final String first_name = intent.getStringExtra("first_name");
+        final String last_name = intent.getStringExtra("last_name");
         final String email = intent.getStringExtra("email");
         final String password = intent.getStringExtra("password");
-        int confirmed  = intent.getIntExtra("confirmed", 0);
-        String register_code = intent.getStringExtra("register_code");
-        String device_code = intent.getStringExtra("device_code");
-        String admin_class_list = intent.getStringExtra("admin_class_list");
-        String user_class_list = intent.getStringExtra("user_class_list");
+        final int confirmed  = intent.getIntExtra("confirmed", 0);
+        final String register_code = intent.getStringExtra("register_code");
+        final String device_code = intent.getStringExtra("device_code");
+        final String admin_class_list = intent.getStringExtra("admin_class_list");
+        final String user_class_list = intent.getStringExtra("user_class_list");
 
 
 
@@ -257,6 +257,31 @@ public class UserHomePageActivity extends AppCompatActivity {
 
                 intent.putExtra("user_id", user_id);
                 intent.putExtra("password", password);
+
+
+                UserHomePageActivity.this.startActivity(intent);
+
+
+
+
+
+
+            }
+
+
+        });
+
+        registerDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserHomePageActivity.this, RegisterDeviceActivity.class);
+
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("device_code", device_code);
+
+
+
 
 
                 UserHomePageActivity.this.startActivity(intent);
