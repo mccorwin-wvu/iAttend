@@ -27,48 +27,68 @@
         style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:textAllCaps="false" />
 
-    <Button
-        android:text="Submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="78dp"
-        android:textSize="25dp"
-        android:id="@+id/confirm_user_Button"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="10dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorAccent" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:textSize="25dp"
-        android:id="@+id/confirm_user_email"
-        android:hint="Email:"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textColorHint="@color/colorAccent"
-        android:layout_marginTop="55dp"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         android:layout_below="@+id/text_confrim_user"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true">
 
-    <EditText
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="wrap_content"
-        android:inputType="textVisiblePassword"
-        android:ems="10"
-        android:textSize="25dp"
-        android:id="@+id/confirm_user_code"
-        android:hint="Code:"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textColorHint="@color/colorAccent"
-        android:layout_marginTop="61dp"
-        android:layout_below="@+id/confirm_user_email"
-        android:layout_alignParentStart="true" />
+        >
+
+        <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:textSize="25dp"
+                    android:id="@+id/confirm_user_email"
+                    android:hint="Email:"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textColorHint="@color/colorAccent"
+                    android:layout_marginTop="55dp"
+                    android:layout_below="@+id/text_confrim_user"
+                    android:layout_alignParentStart="true" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textVisiblePassword"
+                    android:ems="10"
+                    android:textSize="25dp"
+                    android:id="@+id/confirm_user_code"
+                    android:hint="Code:"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textColorHint="@color/colorAccent"
+                    android:layout_marginTop="61dp"
+                    android:layout_below="@+id/confirm_user_email"
+                    android:layout_alignParentStart="true" />
+
+        <Button
+            android:text="Submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="80dp"
+            android:textSize="25dp"
+            android:id="@+id/confirm_user_Button"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:paddingTop="10dp"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/colorAccent"
+            android:layout_gravity="center"/>
+
+
+    </LinearLayout>
+    </ScrollView>
 
 
 </RelativeLayout>

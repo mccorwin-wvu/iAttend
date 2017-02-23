@@ -11,6 +11,91 @@
     tools:context="com.WVU.iAttend.LoginActivity"
     android:background="@color/colorPrimaryDark">
 
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/iAttendText">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            >
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:textSize="25dp"
+                    android:layout_marginTop="54dp"
+                    android:id="@+id/logingEmailBox"
+                    android:hint="Email:"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textColorHint="@color/colorAccent"
+                    android:layout_below="@+id/iAttendText"
+                    android:layout_centerHorizontal="true" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:textSize="25dp"
+                    android:layout_below="@+id/logingEmailBox"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="56dp"
+                    android:id="@+id/logingPassBox"
+                    android:hint="Password:"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textColorHint="@color/colorAccent"/>
+
+            <Button
+                android:text="Log In"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:textSize="25dp"
+                android:id="@+id/logingButton"
+                android:paddingRight="30dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorAccent"
+                android:layout_marginTop="45dp"
+                android:layout_marginBottom="0dp"/>
+
+            <TextView
+                    android:text="Forgot Password"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/forgotPasswordHomePage"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="0dp"/>
+
+            <TextView
+                    android:text="Register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="21dp"
+                    android:id="@+id/logingReg"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:layout_above="@+id/forgotPasswordHomePage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="25dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+
     <TextView
         android:text="iAttend"
         android:id="@+id/iAttendText"
@@ -18,73 +103,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:layout_marginTop="43dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:textColorLink="@android:color/holo_blue_bright"
         android:textColor="@android:color/holo_orange_dark"
         style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:textAllCaps="false" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:ems="10"
-        android:textSize="25dp"
-        android:layout_marginTop="54dp"
-        android:id="@+id/logingEmailBox"
-        android:hint="Email:"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textColorHint="@color/colorAccent"
-        android:layout_below="@+id/iAttendText"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPassword"
-        android:ems="10"
-        android:textSize="25dp"
-        android:layout_below="@+id/logingEmailBox"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
-        android:id="@+id/logingPassBox"
-        android:hint="Password:"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textColorHint="@color/colorAccent"/>
-
-    <Button
-        android:text="Log In"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="78dp"
-        android:textSize="25dp"
-        android:id="@+id/logingButton"
-        android:paddingRight="30dp"
-        android:paddingLeft="30dp"
-        android:paddingTop="10dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorAccent" />
-
-    <TextView
-        android:text="Forgot Password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/forgotPasswordHomePage"
-        android:textColor="@android:color/holo_orange_dark"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:text="Register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="21dp"
-        android:id="@+id/logingReg"
-        android:textColor="@android:color/holo_orange_dark"
-        android:layout_above="@+id/forgotPasswordHomePage"
+        android:textAllCaps="false"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
