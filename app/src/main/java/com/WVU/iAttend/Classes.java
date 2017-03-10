@@ -19,7 +19,7 @@ public class Classes {
     private long admin;
     private List<Long> students = new ArrayList<Long>();
 
-    //Test for commit
+    //Test for commit again
 
     public String getClassName() {
         return className;
