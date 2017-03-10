@@ -3,6 +3,7 @@ package com.WVU.iAttend;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -93,7 +94,7 @@ public class UserHomePageActivity extends AppCompatActivity {
         final String device_code = intent.getStringExtra("device_code");
         final String admin_class_list = intent.getStringExtra("admin_class_list");
         final String user_class_list = intent.getStringExtra("user_class_list");
-
+        final String androidID = Settings.Secure.getString(this.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
 
         User user = new User(user_id, first_name, last_name, email, password, confirmed, register_code, device_code, admin_class_list, user_class_list);
@@ -168,6 +169,20 @@ public class UserHomePageActivity extends AppCompatActivity {
             queue.add(dataRequest);
 
         }
+
+        final String[] device_string;
+        final String deviceID;
+
+        if(device_code != null){
+
+            device_string = device_code.split("\\$");
+            deviceID = device_string[0];
+
+        }
+        else{
+            deviceID = "";
+        }
+
 
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,6 +302,132 @@ public class UserHomePageActivity extends AppCompatActivity {
                 UserHomePageActivity.this.startActivity(intent);
 
 
+            }
+
+
+        });
+
+
+
+        myClasses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(deviceID.compareTo(androidID) !=0){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+
+                else {
+                    Intent intent = new Intent(UserHomePageActivity.this, RegisterDeviceActivity.class);
+
+                    intent.putExtra("user_id", user_id);
+
+
+
+                    UserHomePageActivity.this.startActivity(intent);
+                }
+
+
+            }
+
+
+        });
+
+        joinedClasses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(deviceID.compareTo(androidID) !=0){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+
+                else {
+                    Intent intent = new Intent(UserHomePageActivity.this, RegisterDeviceActivity.class);
+
+                    intent.putExtra("user_id", user_id);
+
+
+
+                    UserHomePageActivity.this.startActivity(intent);
+                }
+
+
+            }
+
+
+        });
+
+
+        createAClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(deviceID.compareTo(androidID) !=0){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+
+                else {
+                    Intent intent = new Intent(UserHomePageActivity.this, CreateAClassActivity.class);
+
+                    intent.putExtra("user_id", user_id);
+
+
+
+                    UserHomePageActivity.this.startActivity(intent);
+                }
+
+
+            }
+
+
+        });
+
+
+
+
+
+
+        registerDevice.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserHomePageActivity.this, RegisterDeviceActivity.class);
+
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("device_code", device_code);
+
+
+
+
+
+                UserHomePageActivity.this.startActivity(intent);
+
+
+            }
+
+
+        });
+
+
+        changePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserHomePageActivity.this, ChangePasswordActivity.class);
+
+                intent.putExtra("user_id", user_id);
+                intent.putExtra("password", password);
+
+
+                UserHomePageActivity.this.startActivity(intent);
+
+
 
 
 
@@ -295,6 +436,30 @@ public class UserHomePageActivity extends AppCompatActivity {
 
 
         });
+
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(UserHomePageActivity.this, LoginActivity.class);
+
+
+
+                finish();
+
+                UserHomePageActivity.this.startActivity(intent);
+
+
+
+
+
+
+            }
+
+
+        });
+
 
 
 

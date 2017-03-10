@@ -47,5 +47,6 @@ repositories {
 dependencies {
     compile 'com.sun.mail:android-mail:1.5.5'
     compile 'com.sun.mail:android-activation:1.5.5'
-    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
+    compile 'com.android.support:gridlayout-v7:25.1.0'
+    compile 'com.google.android.gms:play-services:10.0.1'
 }
