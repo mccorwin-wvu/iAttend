@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class CreateAClassRequest extends StringRequest{
 
-    private static final String REGISTER_REQUEST_URL = "http://98.239.148.75/Register.php";
+    private static final String REGISTER_REQUEST_URL = "http://98.239.148.75/CreateAClass.php";
     private Map<String,String> params;
     public CreateAClassRequest(String class_name, String start_time, String end_time, String days_of_week, String start_date, String end_date,
                                String join_code, String log, String lat, String loc_enabled, String code_enabled, String admin_id, String class_roster, Response.Listener<String> listener){

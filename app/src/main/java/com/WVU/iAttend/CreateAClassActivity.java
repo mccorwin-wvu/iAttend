@@ -45,7 +45,8 @@ public class CreateAClassActivity extends AppCompatActivity {
 
     private double log = 0;
     private double lat = 0;
-    private String joinCodeCode = "";
+    CodeGenerator regCode = new CodeGenerator();
+    private String joinCodeCode = regCode.nextCode().toString();
 
     private double updatedLog = 0;
     private double updatedLat = 0;
@@ -55,8 +56,6 @@ public class CreateAClassActivity extends AppCompatActivity {
 
     private Criteria criteria;
     private String bestProvider;
-
-    private Button setLocationButton;
 
     private LocationManager locationManager;
     private LocationListener locationListener;
@@ -139,25 +138,20 @@ public class CreateAClassActivity extends AppCompatActivity {
         final DatePicker startDate = (DatePicker) findViewById(R.id.StartDayPicker);
         final DatePicker endDate = (DatePicker) findViewById(R.id.EndDatePicker);
         final TextView joinCode = (TextView) findViewById(R.id.JoinCode);
-        setLocationButton = (Button) findViewById(R.id.LocationButton);
+        final Button setLocationButton = (Button) findViewById(R.id.LocationButton);
         final Switch locationSwitch = (Switch) findViewById(R.id.LocationSwitch);
         final Switch codeSwitch = (Switch) findViewById(R.id.CodeSwitch);
         final Button createButton = (Button) findViewById(R.id.createButton);
 
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-        startDate.setMinDate(System.currentTimeMillis() - 1000);
-
-        joinCode.setText(joinCodeCode);
-
-
 
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
 
+                updatedLog= location.getLongitude();
                 updatedLat = location.getLatitude();
-                updatedLog = location.getLongitude();
 
 
             }
@@ -174,26 +168,42 @@ public class CreateAClassActivity extends AppCompatActivity {
 
             @Override
             public void onProviderDisabled(String provider) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+
             }
         };
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 10);
-
-
-                return;
-            } else {
-
-                configureGps();
-
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET}
+                        ,10);
             }
+            return;
+        }
+        else{
+            locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+
         }
 
-        configureGps();
+
+
+
+
+
+
+
+
+
+        startDate.setMinDate(System.currentTimeMillis() - 1000);
+
+        joinCode.setText(joinCodeCode);
+
+        Intent intent = getIntent();
+
+        final int user_id = intent.getIntExtra("user_id", 0);
+
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -201,6 +211,7 @@ public class CreateAClassActivity extends AppCompatActivity {
 
                 log = updatedLog;
                 lat = updatedLat;
+
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Longitude = " + log + "\n Latitude = " + lat,
                         Toast.LENGTH_SHORT);
@@ -221,15 +232,18 @@ public class CreateAClassActivity extends AppCompatActivity {
                 final String classNameFinal = className.getText().toString();
                 final String startTimeFinal = Integer.toString(startTimePicker.getCurrentHour()) +"$"+ Integer.toString(startTimePicker.getCurrentMinute());
                 final String endTimeFinal = Integer.toString(endTimePicker.getCurrentHour()) +"$"+ Integer.toString(endTimePicker.getCurrentMinute());
-                final String daysFinal ="";
+                String daysFinal ="";
                 final String startDayFinal=Integer.toString(startDate.getDayOfMonth())+"$"+Integer.toString(startDate.getMonth())+"$"+Integer.toString(startDate.getYear());
                 final String endDayFinal=Integer.toString(endDate.getDayOfMonth())+"$"+Integer.toString(endDate.getMonth())+"$"+Integer.toString(endDate.getYear());
                 final String joinCodeFinal = joinCodeCode;
-                final String location = log+"$"+lat;
+                final String logFinal = Double.toString(log);
+                final String latFinal = Double.toString(lat);
                 final String locationEnabled;
                 final String codeEnabled;
+                final String admin_id = Integer.toString(user_id);
+                final String classRosterFinal = "$";
                 boolean noError = true;
-                if(mon.isChecked()){daysFinal.concat("mon$");}if(tues.isChecked()){daysFinal.concat("tues$");}if(wed.isChecked()){daysFinal.concat("wed$");}if(thurs.isChecked()){daysFinal.concat("thurs$");}if(fri.isChecked()){daysFinal.concat("fri$");}if(sat.isChecked()){daysFinal.concat("sat$");}if(sun.isChecked()){daysFinal.concat("sun$");}
+                if(mon.isChecked()){daysFinal = daysFinal.concat("mon$");}if(tues.isChecked()){daysFinal = daysFinal.concat("tues$");}if(wed.isChecked()){daysFinal = daysFinal.concat("wed$");}if(thurs.isChecked()){daysFinal = daysFinal.concat("thurs$");}if(fri.isChecked()){daysFinal = daysFinal.concat("fri$");}if(sat.isChecked()){daysFinal = daysFinal.concat("sat$");}if(sun.isChecked()){daysFinal = daysFinal.concat("sun$");}
                 Calendar startDateCal = Calendar.getInstance();
                 Calendar endDateCal = Calendar.getInstance();
                 startDateCal.set(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth());
@@ -273,7 +287,7 @@ public class CreateAClassActivity extends AppCompatActivity {
 
                             if(success){
                                 Intent intent = new Intent(CreateAClassActivity.this, UserHomePageActivity.class);
-                                RegisterActivity.this.startActivity(intent);
+
 
 
 
@@ -282,6 +296,9 @@ public class CreateAClassActivity extends AppCompatActivity {
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
 
+                                intent.putExtra("user_id", user_id);
+
+                                CreateAClassActivity.this.startActivity(intent);
 
                             }else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CreateAClassActivity.this);
@@ -301,18 +318,10 @@ public class CreateAClassActivity extends AppCompatActivity {
 
 
                 if(noError == true){
-                    RegisterRequest registerRequest = new RegisterRequest(first_name,last_name,email,password, register_code, responseListener);
+                    CreateAClassRequest createAClassRequest = new CreateAClassRequest(classNameFinal,startTimeFinal,endTimeFinal,daysFinal, startDayFinal, endDayFinal, joinCodeFinal, logFinal, latFinal, locationEnabled, codeEnabled, admin_id, classRosterFinal, responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(CreateAClassActivity.this);
-                    queue.add(registerRequest);}
-
-
-
-
-
-
-
-
+                    queue.add(createAClassRequest);}
 
 
 
@@ -322,26 +331,31 @@ public class CreateAClassActivity extends AppCompatActivity {
         });
 
 
-    }
 
-    private void configureGps() {
 
-        locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+
 
     }
+
 
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
+        switch (requestCode){
             case 10:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    configureGps();
 
-                    return;
-                }
+                locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+
+                break;
+            default:
+                break;
         }
     }
+
+
+
+
+
 
 
 }

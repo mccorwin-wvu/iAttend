@@ -26,6 +26,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class UserHomePageActivity extends AppCompatActivity {
+    private boolean toMannyClasses = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,6 +174,12 @@ public class UserHomePageActivity extends AppCompatActivity {
 
         final String[] device_string;
         final String deviceID;
+        String [] nbrOfClasses = admin_class_list.split("\\$");
+
+        if(nbrOfClasses.length>=20){
+            toMannyClasses = true;
+        }
+
 
         if(device_code != null){
 
@@ -367,6 +375,12 @@ public class UserHomePageActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(deviceID.compareTo(androidID) !=0){
                     Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+                else if(toMannyClasses == true){
+                    Toast toast = Toast.makeText(getApplicationContext(), "You have too many classes, please delete some before adding another",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();

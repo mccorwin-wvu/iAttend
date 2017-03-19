@@ -132,7 +132,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonMon"
                     android:checked="false"
-                    android:textSize="8dp" />
+                    android:textSize="6dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -140,7 +140,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonTues"
                     android:checked="false"
-                    android:textSize="8dp" />
+                    android:textSize="6dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -148,7 +148,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonWed"
                     android:checked="false"
-                    android:textSize="8dp" />
+                    android:textSize="6dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -156,7 +156,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonThurs"
                     android:checked="false"
-                    android:textSize="8dp" />
+                    android:textSize="6dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -164,7 +164,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonFri"
                     android:checked="false"
-                    android:textSize="8dp" />
+                    android:textSize="6dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -172,7 +172,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonSat"
                     android:checked="false"
-                    android:textSize="8dp" />
+                    android:textSize="6dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -181,7 +181,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonSun"
                     android:checked="false"
-                    android:textSize="8dp" />
+                    android:textSize="6dp" />
 
 
             </LinearLayout>
@@ -204,6 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
+                android:layout_marginBottom="20dp"
                 android:scaleY="1"
                 android:id="@+id/StartDayPicker" />
 
@@ -225,6 +226,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:datePickerMode="spinner"
+                android:layout_marginBottom="20dp"
                 android:scaleY="1"
                 android:id="@+id/EndDatePicker" />
 
@@ -322,6 +324,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_marginTop="25dp"
                 />
+
 
         </LinearLayout>
     </ScrollView>
