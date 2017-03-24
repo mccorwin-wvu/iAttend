@@ -1,6 +1,7 @@
 package com.WVU.iAttend;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,7 +20,10 @@ import android.os.Bundle;
 import android.location.LocationListener;
 
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -45,6 +49,8 @@ public class CreateAClassActivity extends AppCompatActivity {
 
     private double log = 0;
     private double lat = 0;
+
+    private int user_id_home;
     CodeGenerator regCode = new CodeGenerator();
     private String joinCodeCode = regCode.nextCode().toString();
 
@@ -62,9 +68,27 @@ public class CreateAClassActivity extends AppCompatActivity {
 
 
     @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(CreateAClassActivity.this, UserHomePageActivity.class);
+        intent.putExtra("user_id", user_id_home);
+        CreateAClassActivity.this.startActivity(intent);
+
+        //super.onBackPressed();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_create_aclass);
+
+        setupUI(findViewById(R.id.createAClassParr));
+
+        Intent intent = getIntent();
+
+        final int user_id = intent.getIntExtra("user_id", 0);
+
+        user_id_home = user_id;
 
 
         Typeface mytypeface = Typeface.createFromAsset(getAssets(), "Minecraftia-Regular.ttf");
@@ -200,9 +224,7 @@ public class CreateAClassActivity extends AppCompatActivity {
 
         joinCode.setText(joinCodeCode);
 
-        Intent intent = getIntent();
 
-        final int user_id = intent.getIntExtra("user_id", 0);
 
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -260,6 +282,20 @@ public class CreateAClassActivity extends AppCompatActivity {
                     return;
 
                 }
+
+                if(classNameFinal.length()<=0){
+
+                    Toast toast = Toast.makeText(getApplicationContext(), "Every Class Needs a Name.",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+
+                    noError = true;
+                    return;
+
+                }
+
+
 
 
                 if(locationSwitch.isChecked()){
@@ -353,7 +389,34 @@ public class CreateAClassActivity extends AppCompatActivity {
     }
 
 
+    public static void hideSoftKeyboard(Activity activity) {
+        InputMethodManager inputMethodManager =
+                (InputMethodManager) activity.getSystemService(
+                        Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(
+                activity.getCurrentFocus().getWindowToken(), 0);
+    }
 
+    public void setupUI(View view) {
+
+        // Set up touch listener for non-text box views to hide keyboard.
+        if (!(view instanceof EditText)) {
+            view.setOnTouchListener(new View.OnTouchListener() {
+                public boolean onTouch(View v, MotionEvent event) {
+                    hideSoftKeyboard(CreateAClassActivity.this);
+                    return false;
+                }
+            });
+        }
+
+        //If a layout container, iterate over children and seed recursion.
+        if (view instanceof ViewGroup) {
+            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
+                View innerView = ((ViewGroup) view).getChildAt(i);
+                setupUI(innerView);
+            }
+        }
+    }
 
 
 

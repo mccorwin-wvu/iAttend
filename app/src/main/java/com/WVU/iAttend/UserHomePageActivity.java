@@ -174,9 +174,14 @@ public class UserHomePageActivity extends AppCompatActivity {
 
         final String[] device_string;
         final String deviceID;
-        String [] nbrOfClasses = admin_class_list.split("\\$");
+        int numberOfClasses;
+        if( admin_class_list != null){
+        numberOfClasses= admin_class_list.split("\\$").length;}
+        else{
+            numberOfClasses = 0;
+        }
 
-        if(nbrOfClasses.length>=20){
+        if(numberOfClasses>=20){
             toMannyClasses = true;
         }
 
@@ -308,6 +313,45 @@ public class UserHomePageActivity extends AppCompatActivity {
 
 
                 UserHomePageActivity.this.startActivity(intent);
+
+
+            }
+
+
+        });
+
+        joinAClass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(deviceID.compareTo(androidID) !=0){
+                    Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
+                            Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.CENTER, 0, 0);
+                    toast.show();
+                }
+
+
+                else {
+
+
+                    Intent intent = new Intent(UserHomePageActivity.this, JoinClassActivity.class);
+
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("first_name", first_name);
+                    intent.putExtra("last_name", last_name);
+                    intent.putExtra("email", email);
+
+                    intent.putExtra("user_class_list", user_class_list);
+
+
+                    UserHomePageActivity.this.startActivity(intent);
+                }
+
+
+
+
+
 
 
             }
