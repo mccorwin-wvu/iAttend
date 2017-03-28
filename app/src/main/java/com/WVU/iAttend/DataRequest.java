@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Matt on 1/31/2017.
+ * Created by Matthew on 1/31/2017.
  */
 
 public class DataRequest extends StringRequest {
