@@ -46,12 +46,12 @@ public class AttendanceRecordActivity extends AppCompatActivity {
 
 
 
-        String classDays = "28$2$2017-2$3$2017-7$3$2017-9$3$2017-14$3$2017-16$3$2017-21$3$2017-5$4$2017-6$4$2017-";
+        String classDays = "28$2$2017-2$3$2017-7$3$2017-9$3$2017-14$3$2017-16$3$2017-21$3$2017-23$3$2017-28$3$2017-30$3$2017-4$4$2017-6$4$2017-11$4$2017-13$4$2017-";
         String daysMised = "";
-        String daysPres = "7$3$2017-9$3$2017";
+        String daysPres = "2$3$2017-7$3$2017-9$3$2017-16$3$2017-28$3$2017-30$3$2017-";
         String totalNumDays = "";
-        String numMised = "66";
-        String numPres = "99";
+        String numMised = "4";
+        String numPres = "6";
 
 
         DaysMissedv.setText("Days Absent: "+numMised);

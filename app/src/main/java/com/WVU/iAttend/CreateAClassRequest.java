@@ -15,7 +15,7 @@ public class CreateAClassRequest extends StringRequest{
     private static final String REGISTER_REQUEST_URL = "http://98.239.148.75/CreateAClass.php";
     private Map<String,String> params;
     public CreateAClassRequest(String class_name, String start_time, String end_time, String days_of_week, String start_date, String end_date,
-                               String join_code, String log, String lat, String loc_enabled, String code_enabled, String admin_id, String class_roster, String dates, String numberOfDays, Response.Listener<String> listener){
+                               String join_code, String log, String lat, String loc_enabled, String code_enabled, String admin_id, String class_roster, String dates, String numberOfDays, String current_code, Response.Listener<String> listener){
 
         super(Method.POST, REGISTER_REQUEST_URL,listener,null);
         params = new HashMap<>();
@@ -34,6 +34,7 @@ public class CreateAClassRequest extends StringRequest{
         params.put("class_roster",class_roster);
         params.put("dates",dates);
         params.put("numberOfDays",numberOfDays);
+        params.put("current_code",current_code);
 
     }
 

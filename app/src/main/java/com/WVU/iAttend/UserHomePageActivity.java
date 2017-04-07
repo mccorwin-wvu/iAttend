@@ -398,8 +398,9 @@ public class UserHomePageActivity extends AppCompatActivity {
                 }
 
                 else {
-                    Intent intent = new Intent(UserHomePageActivity.this, RegisterDeviceActivity.class);
+                    Intent intent = new Intent(UserHomePageActivity.this, LogAttendanceActivity.class);
 
+                    intent.putExtra("class_id", 53);
                     intent.putExtra("user_id", user_id);
 
 

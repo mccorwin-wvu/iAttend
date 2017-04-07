@@ -44,6 +44,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import static android.location.LocationManager.GPS_PROVIDER;
+import static android.location.LocationManager.NETWORK_PROVIDER;
+
 
 public class CreateAClassActivity extends AppCompatActivity {
 
@@ -207,17 +210,15 @@ public class CreateAClassActivity extends AppCompatActivity {
             return;
         }
         else{
-            locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+            locationManager.requestLocationUpdates(GPS_PROVIDER, 1, 0, locationListener);
 
         }
 
 
 
-
-
-
-
-
+        if(updatedLat == 0 || updatedLog == 0){
+            locationManager.requestLocationUpdates(NETWORK_PROVIDER, 1, 0, locationListener);
+        }
 
 
         startDate.setMinDate(System.currentTimeMillis() - 1000);
@@ -233,6 +234,8 @@ public class CreateAClassActivity extends AppCompatActivity {
 
                 log = updatedLog;
                 lat = updatedLat;
+
+
 
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Longitude = " + log + "\n Latitude = " + lat,
@@ -264,6 +267,7 @@ public class CreateAClassActivity extends AppCompatActivity {
                 final String codeEnabled;
                 final String admin_id = Integer.toString(user_id);
                 final String classRosterFinal = "";
+                final String current_code = regCode.nextCode().toString();
 
                 boolean noError = true;
                 if(mon.isChecked()){daysFinal = daysFinal.concat("mon$");}if(tues.isChecked()){daysFinal = daysFinal.concat("tues$");}if(wed.isChecked()){daysFinal = daysFinal.concat("wed$");}if(thurs.isChecked()){daysFinal = daysFinal.concat("thurs$");}if(fri.isChecked()){daysFinal = daysFinal.concat("fri$");}if(sat.isChecked()){daysFinal = daysFinal.concat("sat$");}if(sun.isChecked()){daysFinal = daysFinal.concat("sun$");}
@@ -373,7 +377,7 @@ public class CreateAClassActivity extends AppCompatActivity {
 
                 if(noError == true){
                     CreateAClassRequest createAClassRequest = new CreateAClassRequest(classNameFinal,startTimeFinal,endTimeFinal,daysFinal, startDayFinal, endDayFinal, joinCodeFinal,
-                            logFinal, latFinal, locationEnabled, codeEnabled, admin_id, classRosterFinal, dates, numberOfDays, responseListener);
+                            logFinal, latFinal, locationEnabled, codeEnabled, admin_id, classRosterFinal, dates, numberOfDays, current_code, responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(CreateAClassActivity.this);
                     queue.add(createAClassRequest);}
@@ -399,7 +403,7 @@ public class CreateAClassActivity extends AppCompatActivity {
         switch (requestCode){
             case 10:
 
-                locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+                locationManager.requestLocationUpdates(GPS_PROVIDER, 1000, 0, locationListener);
 
                 break;
             default:
