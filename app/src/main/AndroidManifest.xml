@@ -40,7 +40,8 @@
 
         <activity android:name=".JoinClassActivity" />
         <activity android:name=".AttendanceRecordActivity" />
-        <activity android:name=".LogAttendanceActivity"></activity>
+        <activity android:name=".LogAttendanceActivity" />
+        <activity android:name=".EditAttendanceActivity"></activity>
     </application>
 
 </manifest>
