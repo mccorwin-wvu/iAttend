@@ -372,7 +372,7 @@ public class UserHomePageActivity extends AppCompatActivity {
                 }
 
                 else {
-                    Intent intent = new Intent(UserHomePageActivity.this, AttendanceRecordActivity.class);
+                    Intent intent = new Intent(UserHomePageActivity.this, EditAttendanceActivity.class);
 
                     intent.putExtra("user_id", user_id);
 
