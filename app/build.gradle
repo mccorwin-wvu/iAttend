@@ -58,6 +58,12 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:+'
 }
 dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
+    compile 'com.android.support.constraint:constraint-layout:+'
+}
+dependencies {
     compile 'com.prolificinteractive:material-calendarview:1.4.3'
     compile 'com.sun.mail:android-mail:1.5.5'
     compile 'com.sun.mail:android-activation:1.5.5'

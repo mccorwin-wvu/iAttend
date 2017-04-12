@@ -2,6 +2,7 @@
 package com.WVU.iAttend;
 
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
@@ -26,6 +27,8 @@ import java.util.HashSet;
 
 public class AttendanceRecordActivity extends AppCompatActivity {
 
+    int user_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,20 +45,23 @@ public class AttendanceRecordActivity extends AppCompatActivity {
         TextView DaysAttv = (TextView) findViewById(R.id.DaysAtt);
         DaysAttv.setTypeface(mytypeface);
 
+        Intent intent = getIntent();
+
+        user_id = intent.getIntExtra("user_id",0);
 
 
 
 
-        String classDays = "28$2$2017-2$3$2017-7$3$2017-9$3$2017-14$3$2017-16$3$2017-21$3$2017-23$3$2017-28$3$2017-30$3$2017-4$4$2017-6$4$2017-11$4$2017-13$4$2017-";
+
+        String classDays = intent.getStringExtra("dates"); ;
         String daysMised = "";
-        String daysPres = "2$3$2017-7$3$2017-9$3$2017-16$3$2017-28$3$2017-30$3$2017-";
+        String daysPres = intent.getStringExtra("dates_present"); ;
         String totalNumDays = "";
-        String numMised = "4";
-        String numPres = "6";
+        int numMised;
+        int numPres;
 
 
-        DaysMissedv.setText("Days Absent: "+numMised);
-        DaysAttv.setText("Days Present: "+numPres);
+
 
 
 
@@ -84,7 +90,11 @@ public class AttendanceRecordActivity extends AppCompatActivity {
         HashSet<CalendarDay> presDaysH = stringToCalDay(daysPres);
 
 
+        numMised = missedDaysH.size() - presDaysH.size();
+        numPres = presDaysH.size();
 
+        DaysMissedv.setText("Days Absent: "+numMised);
+        DaysAttv.setText("Days Present: "+numPres);
 
 
                // stringToCalDay(classDays);

@@ -398,14 +398,62 @@ public class UserHomePageActivity extends AppCompatActivity {
                 }
 
                 else {
-                    Intent intent = new Intent(UserHomePageActivity.this, LogAttendanceActivity.class);
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
-                    intent.putExtra("class_id", 53);
-                    intent.putExtra("user_id", user_id);
+                            try {
+
+                                JSONObject jsonResponse = new JSONObject(response);
+
+                                boolean success = jsonResponse.getBoolean("success");
+                                String class_names = jsonResponse.getString("class_names");
+                                String record_ids = jsonResponse.getString("record_ids");
+                                String class_ids = jsonResponse.getString("class_ids");
+                               boolean noClasses = jsonResponse.getBoolean("noClasses");
+
+                                if (success) {
+
+                                    Intent intent = new Intent(UserHomePageActivity.this, JoinedClassesListActivity.class);
+
+                                    intent.putExtra("user_id", user_id);
+                                    intent.putExtra("class_names", class_names);
+                                    intent.putExtra("record_ids", record_ids);
+                                    intent.putExtra("class_ids", class_ids);
+                                    intent.getBooleanExtra("noClasses",noClasses);
 
 
 
-                    UserHomePageActivity.this.startActivity(intent);
+
+
+                                    UserHomePageActivity.this.startActivity(intent);
+
+
+
+                                } else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(UserHomePageActivity.this);
+                                    builder.setMessage("List Not Found").setNegativeButton("Retry", null).create().show();
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    };
+
+
+
+
+
+                    ClassListRequest classListRequest = new ClassListRequest(Integer.toString(user_id), responseListener);
+
+                    RequestQueue queue = Volley.newRequestQueue(UserHomePageActivity.this);
+                    queue.add(classListRequest);
+
+
                 }
 
 

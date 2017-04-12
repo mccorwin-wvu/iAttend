@@ -35,9 +35,10 @@ import java.text.SimpleDateFormat;
 
 public class LogAttendanceActivity extends AppCompatActivity {
 
-    int class_id;
-    int record_id;
+    String class_id;
+    String record_id;
     int user_id;
+    String class_name;
     String className;
     String startTime;
     String endTime;
@@ -105,11 +106,10 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        user_id = intent.getIntExtra("user_id",0);
-
-         class_id = intent.getIntExtra("class_id",0);
-         record_id = intent.getIntExtra("record_id",0);
-         className = intent.getStringExtra("className");
+         user_id = intent.getIntExtra("user_id",0);
+         class_id = intent.getStringExtra("class_id");
+         record_id = intent.getStringExtra("record_id");
+         className = intent.getStringExtra("class_name");
          startTime = intent.getStringExtra("startTime");
          endTime = intent.getStringExtra("endTime");
          days_of_week = intent.getStringExtra("days_of_week");
@@ -128,7 +128,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
 
 
-        if(className == null){
+        if(admin_id == null){
 
 
             Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -146,7 +146,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
 
 
-                            int class_id = jsonResponse.getInt("class_id");
+                            String class_id = jsonResponse.getString("class_id");
                             String className = jsonResponse.getString("class_name");
                             String startTime = jsonResponse.getString("start_time");
                             String endTime = jsonResponse.getString("end_time");
@@ -166,10 +166,9 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
 
                             intent.putExtra("user_id", user_id);
-
                             intent.putExtra("class_id", class_id);
                             intent.putExtra("record_id", record_id);
-                            intent.putExtra("className", className);
+                            intent.putExtra("class_name", className);
                             intent.putExtra("startTime",startTime );
                             intent.putExtra("endTime", endTime);
                             intent.putExtra("days_of_week", days_of_week);
@@ -209,7 +208,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
             };
 
 
-            ClassDataRequest classDataRequest = new ClassDataRequest(Integer.toString(class_id), responseListener);
+            ClassDataRequest classDataRequest = new ClassDataRequest(class_id, responseListener);
             RequestQueue queue = Volley.newRequestQueue(LogAttendanceActivity.this);
             queue.add(classDataRequest);
 
@@ -247,7 +246,12 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
             DateTime now = new DateTime();
 
-            String dateNow = now.dayOfMonth() + "$" + now.monthOfYear() + "$" + now.year();
+
+
+            final String dateNow = now.getDayOfMonth() + "$" + now.getMonthOfYear() + "$" + now.getYear();
+
+
+
 
             String[] dayArr = days.split("-");
 
@@ -342,11 +346,57 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
                     }
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Attendance Recorded",
-                            Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.CENTER, 0, 0);
-                    toast.show();
+                    Response.Listener<String> responseListener = new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
 
+                            try {
+                                JSONObject jsonResponse = new JSONObject(response);
+
+                                boolean success = jsonResponse.getBoolean("success");
+
+
+                                if (success) {
+
+                                    Intent intent = new Intent(LogAttendanceActivity.this, JoinedClassMenuActivity.class);
+
+
+                                    intent.putExtra("user_id", user_id);
+                                    intent.putExtra("class_name", class_name);
+                                    intent.putExtra("record_id", record_id);
+                                    intent.putExtra("class_id", class_id);
+
+
+
+
+
+
+                                    LogAttendanceActivity.this.startActivity(intent);
+
+
+
+                                } else {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(LogAttendanceActivity.this);
+                                    builder.setMessage("Date Already Logged").setNegativeButton("Retry", null).create().show();
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                    };
+
+
+
+
+
+                    LogRequest logRequest = new LogRequest(record_id, dateNow+"-",  responseListener);
+
+                    RequestQueue queue = Volley.newRequestQueue(LogAttendanceActivity.this);
+                    queue.add(logRequest);
 
                 }
 

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@color/colorPrimaryDark"
+    android:orientation="vertical"
+    tools:context="com.WVU.iAttend.RegisterActivity">
+
+    <TextView
+        android:id="@+id/joinedListMenuText"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        android:text="Joined Classes"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textColorLink="@android:color/holo_blue_bright"
+        android:textSize="30sp" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/attendanceRecordTitle"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+
+            <Button
+                android:id="@+id/joinedMenuLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/regPasswordCon"
+                android:layout_marginTop="100dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:text="Log Attendance"
+                android:textColor="@color/colorAccent"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/joinedMenuRec"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/regPasswordCon"
+                android:layout_marginTop="35dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:text="View Attendance Record"
+                android:textColor="@color/colorAccent"
+                android:textSize="20dp" />
+
+            <Button
+                android:id="@+id/joinedMenuLeave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/regPasswordCon"
+                android:layout_marginTop="35dp"
+                android:background= "#FFFF4444"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+
+                android:paddingTop="10dp"
+                android:text="LEAVE CLASS"
+                android:textStyle="bold"
+                android:textSize="20dp" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
