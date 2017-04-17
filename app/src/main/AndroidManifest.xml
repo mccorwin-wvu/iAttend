@@ -43,7 +43,11 @@
         <activity android:name=".LogAttendanceActivity" />
         <activity android:name=".EditAttendanceActivity" />
         <activity android:name=".JoinedClassesListActivity" />
-        <activity android:name=".JoinedClassMenuActivity"></activity>
+        <activity android:name=".JoinedClassMenuActivity" />
+        <activity android:name=".MyClassesListActivity" />
+        <activity android:name=".MyClassesMenuActivity" />
+        <activity android:name=".RosterListActivity" />
+        <activity android:name=".RosterMenuActivity"></activity>
     </application>
 
 </manifest>

@@ -27,7 +27,8 @@ import java.util.HashSet;
 
 public class AttendanceRecordActivity extends AppCompatActivity {
 
-    int user_id;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class AttendanceRecordActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        user_id = intent.getIntExtra("user_id",0);
+
 
 
 

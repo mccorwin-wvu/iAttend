@@ -26,7 +26,7 @@ import java.util.Calendar;
 public class EditAttendanceActivity extends AppCompatActivity {
 
     private int record_id;
-    private int user_id;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +54,10 @@ public class EditAttendanceActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        record_id = intent.getIntExtra("record_id", 0);
-        user_id = intent.getIntExtra("user_id",0);
+        record_id = Integer.parseInt(intent.getStringExtra("record_id"));
 
-        record_id = 8;
+
+
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,13 +131,10 @@ public class EditAttendanceActivity extends AppCompatActivity {
 
 
 
-                                Intent intent = new Intent(EditAttendanceActivity.this, UserHomePageActivity.class);
 
 
-                                intent.putExtra("user_id", user_id);
 
-
-                                Toast toast = Toast.makeText(getApplicationContext(), "Class Edited.",
+                                Toast toast = Toast.makeText(getApplicationContext(), "Day Edited.",
                                         Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
@@ -145,7 +142,6 @@ public class EditAttendanceActivity extends AppCompatActivity {
 
 
 
-                                EditAttendanceActivity.this.startActivity(intent);
 
 
                             }
