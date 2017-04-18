@@ -258,8 +258,8 @@ public class CreateAClassActivity extends AppCompatActivity {
                 final String startTimeFinal = Integer.toString(startTimePicker.getCurrentHour()) +"$"+ Integer.toString(startTimePicker.getCurrentMinute());
                 final String endTimeFinal = Integer.toString(endTimePicker.getCurrentHour()) +"$"+ Integer.toString(endTimePicker.getCurrentMinute());
                 String daysFinal ="";
-                final String startDayFinal=Integer.toString(startDate.getDayOfMonth())+"$"+Integer.toString(startDate.getMonth())+"$"+Integer.toString(startDate.getYear());
-                final String endDayFinal=Integer.toString(endDate.getDayOfMonth())+"$"+Integer.toString(endDate.getMonth())+"$"+Integer.toString(endDate.getYear());
+                final String startDayFinal=Integer.toString(startDate.getDayOfMonth())+"$"+Integer.toString(startDate.getMonth()+1)+"$"+Integer.toString(startDate.getYear());
+                final String endDayFinal=Integer.toString(endDate.getDayOfMonth())+"$"+Integer.toString(endDate.getMonth()+1)+"$"+Integer.toString(endDate.getYear());
                 final String joinCodeFinal = joinCodeCode;
                 final String logFinal = Double.toString(log);
                 final String latFinal = Double.toString(lat);

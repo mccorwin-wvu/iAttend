@@ -171,12 +171,10 @@ public class JoinedClassMenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(JoinedClassMenuActivity.this, AttendanceRecordActivity.class);
+                Intent intent = new Intent(JoinedClassMenuActivity.this, UserHomePageActivity.class);
 
                 intent.putExtra("user_id", user_id);
-                intent.putExtra("class_name", class_name);
-                intent.putExtra("record_id", record_id);
-                intent.putExtra("class_id", class_id);
+
 
 
 
