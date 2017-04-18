@@ -242,7 +242,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
                 attendanceLogBoxv.setFocusable(false);
             }
 
-            notAClassDay = false;
+            notAClassDay = true;
 
             DateTime now = new DateTime();
 
@@ -257,7 +257,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
             for (String day : dayArr) {
                 if (day.compareTo(dateNow) == 0) {
-                    notAClassDay = true;
+                    notAClassDay = false;
                     break;
                 }
             }
@@ -300,7 +300,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
                 }
                 return;
             } else {
-                locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
 
             }
 
@@ -335,7 +335,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
                     if (checkCords(updatedLat, updatedLog, lat, log) == false) {
 
 
-                        Toast toast = Toast.makeText(getApplicationContext(), "Location is not Close enough, keep trying.",
+                        Toast toast = Toast.makeText(getApplicationContext(), "Location is not Close enough, keep trying . Log = "+updatedLog+"lat = "+updatedLat,
                                 Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
