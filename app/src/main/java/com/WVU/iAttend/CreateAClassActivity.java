@@ -171,6 +171,9 @@ public class CreateAClassActivity extends AppCompatActivity {
         final Button createButton = (Button) findViewById(R.id.createButton);
 
 
+
+
+
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
         locationListener = new LocationListener() {
@@ -210,7 +213,7 @@ public class CreateAClassActivity extends AppCompatActivity {
             return;
         }
         else{
-            locationManager.requestLocationUpdates(GPS_PROVIDER, 1, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, locationListener);
 
         }
 
@@ -403,7 +406,7 @@ public class CreateAClassActivity extends AppCompatActivity {
         switch (requestCode){
             case 10:
 
-                locationManager.requestLocationUpdates(GPS_PROVIDER, 1000, 0, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
 
                 break;
             default:

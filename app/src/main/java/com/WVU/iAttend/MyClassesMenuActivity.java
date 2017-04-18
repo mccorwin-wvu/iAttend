@@ -161,7 +161,7 @@ public class MyClassesMenuActivity extends AppCompatActivity {
 
 
 
-                RosterListRequest rosterListRequest = new RosterListRequest(class_id, responseListener);
+                RosterListRequest rosterListRequest = new RosterListRequest(class_roster, responseListener);
 
                 RequestQueue queue = Volley.newRequestQueue(MyClassesMenuActivity.this);
                 queue.add(rosterListRequest);
