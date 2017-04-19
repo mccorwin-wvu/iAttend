@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
 
+
+
 android {
     compileSdkVersion 24
     buildToolsVersion "25.0.2"
@@ -41,6 +43,7 @@ android {
 
 repositories {
     jcenter()
+    mavenCentral()
     maven {
         url "https://maven.java.net/content/groups/public/"
     }
@@ -48,36 +51,11 @@ repositories {
 
 
 
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
-dependencies {
-    compile 'com.android.support.constraint:constraint-layout:+'
-}
+
 dependencies {
     compile 'com.prolificinteractive:material-calendarview:1.4.3'
     compile 'com.sun.mail:android-mail:1.5.5'
     compile 'com.sun.mail:android-activation:1.5.5'
     compile 'com.google.android.gms:play-services:10.2.0'
+    compile group: 'commons-net', name: 'commons-net', version: '3.4'
 }

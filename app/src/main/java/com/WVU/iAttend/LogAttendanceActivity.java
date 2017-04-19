@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -24,14 +25,18 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
+import org.apache.commons.net.time.TimeTCPClient;
 import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 public class LogAttendanceActivity extends AppCompatActivity {
 
@@ -54,6 +59,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
     String current_code;
     int numberOfDays;
     boolean notAClassDay;
+    DateTime now;
 
 
     private LocationManager locationManager;
@@ -72,14 +78,15 @@ public class LogAttendanceActivity extends AppCompatActivity {
     }
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_attendance);
 
-        Typeface mytypeface = Typeface.createFromAsset(getAssets(),"Minecraftia-Regular.ttf");
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        Typeface mytypeface = Typeface.createFromAsset(getAssets(), "Minecraftia-Regular.ttf");
 
         TextView logAttendanceTextv = (TextView) findViewById(R.id.logAttendanceText);
         logAttendanceTextv.setTypeface(mytypeface);
@@ -106,29 +113,26 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-         user_id = intent.getIntExtra("user_id",0);
-         class_id = intent.getStringExtra("class_id");
-         record_id = intent.getStringExtra("record_id");
-         className = intent.getStringExtra("class_name");
-         startTime = intent.getStringExtra("startTime");
-         endTime = intent.getStringExtra("endTime");
-         days_of_week = intent.getStringExtra("days_of_week");
-         startDate = intent.getStringExtra("startDate");
-         endDate = intent.getStringExtra("endDate");
-         log = intent.getDoubleExtra("log",0);
-         lat = intent.getDoubleExtra("lat",0);
-         loc_enabled = intent.getStringExtra("loc_enabled");
-         code_enabled = intent.getStringExtra("code_enabled");
-         admin_id = intent.getStringExtra("admin_id");
-         days = intent.getStringExtra("dates");
-         numberOfDays = intent.getIntExtra("numberOfDays",0);
+        user_id = intent.getIntExtra("user_id", 0);
+        class_id = intent.getStringExtra("class_id");
+        record_id = intent.getStringExtra("record_id");
+        className = intent.getStringExtra("class_name");
+        startTime = intent.getStringExtra("startTime");
+        endTime = intent.getStringExtra("endTime");
+        days_of_week = intent.getStringExtra("days_of_week");
+        startDate = intent.getStringExtra("startDate");
+        endDate = intent.getStringExtra("endDate");
+        log = intent.getDoubleExtra("log", 0);
+        lat = intent.getDoubleExtra("lat", 0);
+        loc_enabled = intent.getStringExtra("loc_enabled");
+        code_enabled = intent.getStringExtra("code_enabled");
+        admin_id = intent.getStringExtra("admin_id");
+        days = intent.getStringExtra("dates");
+        numberOfDays = intent.getIntExtra("numberOfDays", 0);
         current_code = intent.getStringExtra("current_code");
 
 
-
-
-
-        if(admin_id == null){
+        if (admin_id == null) {
 
 
             Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -136,14 +140,11 @@ public class LogAttendanceActivity extends AppCompatActivity {
                 public void onResponse(String response) {
 
 
-
                     try {
                         JSONObject jsonResponse = new JSONObject(response);
                         boolean success = jsonResponse.getBoolean("success");
 
-                        if(success){
-
-
+                        if (success) {
 
 
                             String class_id = jsonResponse.getString("class_id");
@@ -169,7 +170,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
                             intent.putExtra("class_id", class_id);
                             intent.putExtra("record_id", record_id);
                             intent.putExtra("class_name", className);
-                            intent.putExtra("startTime",startTime );
+                            intent.putExtra("startTime", startTime);
                             intent.putExtra("endTime", endTime);
                             intent.putExtra("days_of_week", days_of_week);
                             intent.putExtra("startDate", startDate);
@@ -184,21 +185,15 @@ public class LogAttendanceActivity extends AppCompatActivity {
                             intent.putExtra("numberOfDays", numberOfDays);
 
 
-
                             LogAttendanceActivity.this.startActivity(intent);
 
 
-
-
-                        }
-
-                        else{
+                        } else {
                             AlertDialog.Builder builder = new AlertDialog.Builder(LogAttendanceActivity.this);
-                            builder.setMessage("Class Does Not Exist").setNegativeButton("Retry",null).create().show();
+                            builder.setMessage("Class Does Not Exist").setNegativeButton("Retry", null).create().show();
                         }
 
-                    }
-                    catch (JSONException e){
+                    } catch (JSONException e) {
                         e.printStackTrace();
 
                     }
@@ -212,9 +207,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
             RequestQueue queue = Volley.newRequestQueue(LogAttendanceActivity.this);
             queue.add(classDataRequest);
 
-        }
-
-        else {
+        } else {
 
             attendanceLogClassNamev.setText("Class Name: " + className);
 
@@ -244,13 +237,10 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
             notAClassDay = true;
 
-            DateTime now = new DateTime();
-
+            now = new DateTime();
 
 
             final String dateNow = now.getDayOfMonth() + "$" + now.getMonthOfYear() + "$" + now.getYear();
-
-
 
 
             String[] dayArr = days.split("-");
@@ -346,6 +336,18 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
                     }
 
+                    if (CheckZone(updatedLat, updatedLog) == false) {
+
+                        Toast toast = Toast.makeText(getApplicationContext(), "Your Android Clock is not Synced. Please Set your date and time to auto and restart the app.",
+                                Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.CENTER, 0, 0);
+                        toast.show();
+
+
+                        return;
+
+                    }
+
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -367,12 +369,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
                                     intent.putExtra("class_id", class_id);
 
 
-
-
-
-
                                     LogAttendanceActivity.this.startActivity(intent);
-
 
 
                                 } else {
@@ -390,10 +387,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
                     };
 
 
-
-
-
-                    LogRequest logRequest = new LogRequest(record_id, dateNow+"-",  responseListener);
+                    LogRequest logRequest = new LogRequest(record_id, dateNow + "-", responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(LogAttendanceActivity.this);
                     queue.add(logRequest);
@@ -410,10 +404,10 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode){
+        switch (requestCode) {
             case 10:
 
-                locationManager.requestLocationUpdates("gps", 1000, 0, locationListener);
+                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
 
                 break;
             default:
@@ -422,10 +416,10 @@ public class LogAttendanceActivity extends AppCompatActivity {
     }
 
 
-    static public boolean checkCords(double lat, double log, double classLat, double classLog){
+    static public boolean checkCords(double lat, double log, double classLat, double classLog) {
 
 
-        if((Math.abs(lat - classLat) < 000.001) && (Math.abs(log - classLog) < 000.001) ){
+        if ((Math.abs(lat - classLat) < 000.001) && (Math.abs(log - classLog) < 000.001)) {
             return true;
         }
 
@@ -434,6 +428,62 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
     }
 
+
+    private static DateTime getInternetTime() {
+
+
+        try {
+            TimeTCPClient client = new TimeTCPClient();
+            try {
+                // Set timeout of 60 seconds
+                client.setDefaultTimeout(20000);
+                // Connecting to time server
+                // Other time servers can be found at : http://tf.nist.gov/tf-cgi/servers.cgi#
+                // Make sure that your program NEVER queries a server more frequently than once every 4 seconds
+                client.connect("time-b.nist.gov");
+                DateTime returnDateTime = new DateTime(client.getDate());
+                return returnDateTime;
+
+            } finally {
+                client.disconnect();
+            }
+        } catch (IOException e) {
+
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    private static boolean CheckZone(double lat, double log) {
+
+
+        DateTime now = getInternetTime();
+        DateTime nowDevice = new DateTime();
+
+        System.out.println(TimeZoneMapper.latLngToTimezoneString(lat, log));
+        System.out.println(nowDevice.getZone().toString());
+        System.out.println(nowDevice.toString());
+
+        if (nowDevice.getZone().toString().compareTo(TimeZoneMapper.latLngToTimezoneString(lat, log)) == 0) {
+
+
+            DateTime estZone = nowDevice.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone("America/New_York")));
+
+            if (Math.abs((now.getMillis() / 1000) - (estZone.getMillis() / 1000)) < 180) {
+
+                return true;
+
+            }
+
+
+        } else {
+            return false;
+        }
+        return false;
+
+
+    }
 
 
 }
