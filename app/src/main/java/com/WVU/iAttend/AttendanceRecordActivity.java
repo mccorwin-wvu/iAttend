@@ -95,6 +95,7 @@ public class AttendanceRecordActivity extends AppCompatActivity {
 
         numMised = missedDaysH.size();
         numPres = presDaysH.size();
+
         if(daysPres.compareTo("") == 0){
             DaysAttv.setText("Days Present: "+0);
         }
