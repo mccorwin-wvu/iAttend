@@ -83,30 +83,24 @@ public class RegisterDeviceActivity extends AppCompatActivity {
 //
 //        System.out.println(jodaTime.toString(builder));
 
-        final int hour = jodaTime.getHourOfDay();
-        final int min = jodaTime.getMinuteOfDay();
-        final int day = jodaTime.getDayOfYear();
-        final int year = jodaTime.getYear();
-        int[] device_id = new int[4];
+
+        final long epochMin = (jodaTime.getMillis()/1000)/60;
+        final long device_id ;
         String currentCode = "0";
 
 
         if (device_code.compareTo(Integer.toString(-1)) == 0) {
 
             currentCode = "-1";
-            device_id[0] = min;
-            device_id[2] = hour;
-            device_id[1] = day;
-            device_id[3] = year;
+            device_id = epochMin;
+
 
 
         } else {
             String[] device_string = device_code.split("\\$");
             currentCode = device_string[0];
-            device_id[0] = Integer.parseInt(device_string[1]);
-            device_id[1] = Integer.parseInt(device_string[2]);
-            device_id[2] = Integer.parseInt(device_string[3]);
-            device_id[3] = Integer.parseInt(device_string[4]);
+            device_id = Long.parseLong(device_string[1]);
+
 
         }
 
@@ -129,16 +123,16 @@ public class RegisterDeviceActivity extends AppCompatActivity {
         }
 
         final boolean clearToReg;
-        if (year > device_id[3]) {
+
+        if(((device_id + 60) < epochMin)|| currentCode.compareTo("-1") == 0){
             clearToReg = true;
-        } else if (day > device_id[2]) {
-            clearToReg = true;
-        } else if ((min + 60) < (device_id[0]) || currentCode.compareTo("-1") == 0) {
-            clearToReg = true;
-        } else {
+        }
+        else{
             clearToReg = false;
         }
-        final int timeToWait = (device_id[0] + 60) - (min);
+
+
+        final long timeToWait = (device_id + 60) - (epochMin);
 
         System.out.println("time to wait: "+timeToWait);
         System.out.println(androidID);
@@ -169,7 +163,7 @@ public class RegisterDeviceActivity extends AppCompatActivity {
                     RegisterDeviceActivity.this.startActivity(intent);
                 } else {
 
-                    String newDeviceCode = androidID + "$" + min + "$" + hour + "$" + day + "$" + year;
+                    String newDeviceCode = androidID + "$" + epochMin;
 
 
 

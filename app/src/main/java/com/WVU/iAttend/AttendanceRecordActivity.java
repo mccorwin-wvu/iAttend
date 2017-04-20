@@ -86,16 +86,28 @@ public class AttendanceRecordActivity extends AppCompatActivity {
 
 
 
+
+
         HashSet<CalendarDay> classDaysH = stringToCalDay(classDays);
         HashSet<CalendarDay> missedDaysH = stringToCalDay(daysMised);
         HashSet<CalendarDay> presDaysH = stringToCalDay(daysPres);
 
 
-        numMised = missedDaysH.size() - presDaysH.size();
+        numMised = missedDaysH.size();
         numPres = presDaysH.size();
+        if(daysPres.compareTo("") == 0){
+            DaysAttv.setText("Days Present: "+0);
+        }
+        else{
+            DaysAttv.setText("Days Present: "+numPres);
+        }
 
-        DaysMissedv.setText("Days Absent: "+numMised);
-        DaysAttv.setText("Days Present: "+numPres);
+        if(daysMised.compareTo("") == 0){
+            DaysMissedv.setText("Days Absent: "+0);
+        }
+        else {
+            DaysMissedv.setText("Days Absent: " + numMised);
+        }
 
 
                // stringToCalDay(classDays);

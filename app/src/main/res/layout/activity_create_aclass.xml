@@ -13,7 +13,7 @@
     <TextView
         android:text="Create-A-Class"
         android:id="@+id/createAClassText"
-        android:textSize="40sp"
+        android:textSize="30sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:id="@+id/ClassName"
                 android:hint="Class Name:"
                 android:layout_marginTop="20dp"
@@ -63,7 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:id="@+id/StartTimeText"
                 android:text="Start Time"
                 android:textColor="@android:color/holo_orange_dark"
@@ -86,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:id="@+id/endTImeText"
                 android:text="End Time"
                 android:textColor="@android:color/holo_orange_dark"
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:id="@+id/DaysOfTheWeekText"
                 android:text="Days Of the Week"
                 android:textColor="@android:color/holo_orange_dark"
@@ -134,7 +134,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonMon"
                     android:checked="false"
-                    android:textSize="6dp" />
+                    android:textSize="4dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -142,7 +142,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonTues"
                     android:checked="false"
-                    android:textSize="6dp" />
+                    android:textSize="4dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -150,7 +150,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonWed"
                     android:checked="false"
-                    android:textSize="6dp" />
+                    android:textSize="4dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -158,7 +158,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonThurs"
                     android:checked="false"
-                    android:textSize="6dp" />
+                    android:textSize="4dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -166,7 +166,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonFri"
                     android:checked="false"
-                    android:textSize="6dp" />
+                    android:textSize="4dp" />
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -174,7 +174,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonSat"
                     android:checked="false"
-                    android:textSize="6dp" />
+                    android:textSize="4dp" />
 
                 <RadioButton
                     android:layout_width="wrap_content"
@@ -183,7 +183,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonSun"
                     android:checked="false"
-                    android:textSize="6dp" />
+                    android:textSize="4dp" />
 
 
             </LinearLayout>
@@ -193,7 +193,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:id="@+id/StartDayText"
                 android:text="Start Day"
                 android:textColor="@android:color/holo_orange_dark"
@@ -215,7 +215,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:id="@+id/EndDayText"
                 android:text="End Day"
                 android:textColor="@android:color/holo_orange_dark"
@@ -242,7 +242,7 @@
                     android:layout_width="119dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:textSize="25dp"
+                    android:textSize="20dp"
                     android:id="@+id/JoinCodeText"
                     android:text="Join Code: "
                     android:textColor="@android:color/holo_orange_dark"
@@ -277,11 +277,11 @@
                 android:text="Set Location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:id="@+id/LocationButton"
                 android:paddingRight="30dp"
                 android:paddingLeft="30dp"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/colorAccent"
                 android:layout_below="@+id/regPasswordCon"
@@ -315,11 +315,11 @@
                 android:text="Create"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:id="@+id/createButton"
                 android:paddingRight="30dp"
                 android:paddingLeft="30dp"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/colorAccent"
                 android:layout_below="@+id/regPasswordCon"
