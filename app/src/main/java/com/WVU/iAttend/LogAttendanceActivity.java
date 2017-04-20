@@ -1,6 +1,7 @@
 package com.WVU.iAttend;
 
 import android.*;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -18,6 +19,7 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +39,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+
+import static com.WVU.iAttend.R.id.progressBar2;
 
 public class LogAttendanceActivity extends AppCompatActivity {
 
@@ -60,6 +64,8 @@ public class LogAttendanceActivity extends AppCompatActivity {
     int numberOfDays;
     boolean notAClassDay;
     DateTime now;
+    ProgressBar progressBar;
+
 
 
     private LocationManager locationManager;
@@ -82,6 +88,8 @@ public class LogAttendanceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_attendance);
+
+
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -110,6 +118,9 @@ public class LogAttendanceActivity extends AppCompatActivity {
         attendanceLogButtonv.setTypeface(mytypeface);
 
         final Button attendanceLogButton = (Button) findViewById(R.id.attendanceLogButton);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
+        progressBar.setVisibility(View.GONE);
 
         Intent intent = getIntent();
 
@@ -325,7 +336,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
                     if (checkCords(updatedLat, updatedLog, lat, log) == false) {
 
 
-                        Toast toast = Toast.makeText(getApplicationContext(), "Location is not Close enough, keep trying . Log = "+updatedLog+"lat = "+updatedLat,
+                        Toast toast = Toast.makeText(getApplicationContext(), "Location is not Close enough, keep trying. Log = "+updatedLog+"lat = "+updatedLat,
                                 Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.CENTER, 0, 0);
                         toast.show();
@@ -335,8 +346,10 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
 
                     }
-
+                    progressBar.setVisibility(View.VISIBLE);
                     if (CheckZone(updatedLat, updatedLog) == false) {
+
+                        progressBar.setVisibility(View.GONE);
 
                         Toast toast = Toast.makeText(getApplicationContext(), "Your Android Clock is not Synced. Please Set your date and time to auto and restart the app.",
                                 Toast.LENGTH_LONG);
@@ -347,6 +360,9 @@ public class LogAttendanceActivity extends AppCompatActivity {
                         return;
 
                     }
+
+                    progressBar.setVisibility(View.GONE);
+
 
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
@@ -364,7 +380,7 @@ public class LogAttendanceActivity extends AppCompatActivity {
 
 
                                     intent.putExtra("user_id", user_id);
-                                    intent.putExtra("class_name", class_name);
+                                    intent.putExtra("class_name", className);
                                     intent.putExtra("record_id", record_id);
                                     intent.putExtra("class_id", class_id);
 
@@ -435,12 +451,13 @@ public class LogAttendanceActivity extends AppCompatActivity {
         try {
             TimeTCPClient client = new TimeTCPClient();
             try {
+
                 // Set timeout of 60 seconds
-                client.setDefaultTimeout(20000);
+                client.setDefaultTimeout(60000);
                 // Connecting to time server
                 // Other time servers can be found at : http://tf.nist.gov/tf-cgi/servers.cgi#
                 // Make sure that your program NEVER queries a server more frequently than once every 4 seconds
-                client.connect("time-b.nist.gov");
+                client.connect("nist1-macon.macon.ga.us");
                 DateTime returnDateTime = new DateTime(client.getDate());
                 return returnDateTime;
 

@@ -83,7 +83,7 @@
                 android:background="@color/colorPrimary"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:text="View Roster"
                 android:textColor="@color/colorAccent"
                 android:textSize="20dp" />
@@ -100,7 +100,7 @@
                 android:background="@color/colorPrimary"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:text="Get New Join Code"
                 android:textColor="@color/colorAccent"
                 android:textSize="20dp" />
@@ -115,7 +115,7 @@
                 android:background="@color/colorPrimary"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:text="Get New Class Code"
                 android:textColor="@color/colorAccent"
                 android:textSize="20dp" />
@@ -130,8 +130,7 @@
                 android:background= "#FFFF4444"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
-
-                android:paddingTop="10dp"
+                android:paddingTop="5dp"
                 android:text="DELETE CLASS"
                 android:textStyle="bold"
                 android:textSize="20dp" />
