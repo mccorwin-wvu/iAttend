@@ -208,6 +208,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
                 // loginRequest sends the email and password to the server and will trigger responseLister when the server responds
+                //
 
                 LoginRequest loginRequest = new LoginRequest(email, password, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
