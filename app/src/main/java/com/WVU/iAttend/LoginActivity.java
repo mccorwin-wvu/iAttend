@@ -22,10 +22,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 public class LoginActivity extends AppCompatActivity {
 
     private static final int CONFIRMED = 1;
-    private static final int NOTCONFIRMED = 1;
+    private static final int NOTCONFIRMED = 0;
 
 
 
@@ -125,23 +127,16 @@ public class LoginActivity extends AppCompatActivity {
 
                         if(success){
 
-                            // get data from the JSON string and store it in its own variable
+                            // get data from the JSON string and stores it in the User object
 
-                            int user_id = jsonResponse.getInt("user_id");
-                            String first_name = jsonResponse.getString("first_name");
-                            String last_name = jsonResponse.getString("last_name");
-                            String email = jsonResponse.getString("email");
-                            String password = jsonResponse.getString("password");
-                            int confirmed  = jsonResponse.getInt("confirmed");
-                            String register_code = jsonResponse.getString("register_code");
-                            String device_code = jsonResponse.getString("device_code");
-                            String admin_class_list = jsonResponse.getString("admin_class_list");
-                            String user_class_list = jsonResponse.getString("user_class_list");
+                            User user = new User(jsonResponse.getInt("user_id"), jsonResponse.getString("first_name"), jsonResponse.getString("last_name"), jsonResponse.getString("email"), jsonResponse.getString("password")
+                                    , jsonResponse.getInt("confirmed"), jsonResponse.getString("register_code"), jsonResponse.getString("device_code"), jsonResponse.getString("admin_class_list"), jsonResponse.getString("user_class_list"));
+
 
 
                             // checks to see if the user is confirmed
 
-                            if(confirmed == NOTCONFIRMED){
+                            if(user.getConfirmed() == NOTCONFIRMED){
 
 
                                 // if the user entered is not confirmed then it prints a Toast and sends the user to the Confirm user activity
@@ -165,17 +160,8 @@ public class LoginActivity extends AppCompatActivity {
                                 // puts all the needed data into an intent object and sends that object along with the user to the User Home Page activity
 
                                 Intent intent = new Intent(LoginActivity.this, UserHomePageActivity.class);
-                                intent.putExtra("user_id", user_id);
-                                intent.putExtra("first_name", first_name);
-                                intent.putExtra("last_name", last_name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("password", password);
-                                intent.putExtra("confirmed", confirmed);
-                                intent.putExtra("register_code", register_code);
-                                intent.putExtra("device_code", device_code);
-                                intent.putExtra("admin_class_list", admin_class_list);
-                                intent.putExtra("user_class_list", user_class_list);
 
+                                intent.putExtra("user",user);
 
                                 LoginActivity.this.startActivity(intent);
                             }

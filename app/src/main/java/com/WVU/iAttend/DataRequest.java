@@ -13,7 +13,10 @@ import java.util.Map;
 
 public class DataRequest extends StringRequest {
 
-    private static final String LOGIN_REQUEST_URL = "http://98.239.148.75/DataRequest.php";
+    // old url = "http://98.239.148.75/DataRequest.php"
+
+
+    private static final String LOGIN_REQUEST_URL = "https://strawless-overload.000webhostapp.com/DataRequest.php";
     private Map<String,String> params;
     public DataRequest(String user_id, Response.Listener<String> listener){
 

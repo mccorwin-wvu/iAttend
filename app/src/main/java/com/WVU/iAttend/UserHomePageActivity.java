@@ -1,6 +1,6 @@
 package com.WVU.iAttend;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.provider.Settings;
@@ -9,32 +9,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class UserHomePageActivity extends AppCompatActivity {
     private boolean toMannyClasses = false;
+    private User user;
+    private String androidID;
 
 
+    @SuppressLint("HardwareIds")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home_page);
 
-        Typeface mytypeface = Typeface.createFromAsset(getAssets(),"Minecraftia-Regular.ttf");
+        // Setting the fount for all the Views in the activity
+
+
+        Typeface mytypeface = Typeface.createFromAsset(getAssets(), "Minecraftia-Regular.ttf");
 
         TextView user_home_textv = (TextView) findViewById(R.id.user_home_text);
         user_home_textv.setTypeface(mytypeface);
@@ -64,145 +63,63 @@ public class UserHomePageActivity extends AppCompatActivity {
         UserHomeLogoutv.setTypeface(mytypeface);
 
 
+        // making a separate variable of each view to use in the rest of the method
 
 
-
-
-
-        final Button refreshButton = (Button) findViewById(R.id.user_home_refresh);
-
-        Button myClasses = (Button) findViewById(R.id.UserHomeMyClasses);
-        Button joinedClasses = (Button) findViewById(R.id.UserHomeJoinedClasses);
-        Button createAClass = (Button) findViewById(R.id.UserHomeCreateAClass);
-        Button joinAClass = (Button) findViewById(R.id.UserHomeJoinAClass);
-        Button registerDevice = (Button) findViewById(R.id.UserHomeRegisterDevice);
-        Button changePassword = (Button) findViewById(R.id.UserHomeChangePassword);
-        Button logout = (Button) findViewById(R.id.UserHomeLogout);
-
-
-
-       // ListView lv = (ListView) findViewById(R.id.homeList);
-
+        Button refreshButton = (Button) user_home_refreshv;
+        Button myClasses = (Button) UserHomeMyClassesv;
+        Button joinedClasses = (Button) UserHomeJoinedClassesv;
+        Button createAClass = (Button) UserHomeCreateAClassv;
+        Button joinAClass = (Button) UserHomeJoinAClassv;
+        Button registerDevice = (Button) UserHomeRegisterDevicev;
+        Button changePassword = (Button) UserHomeChangePasswordv;
+        Button logout = (Button) UserHomeLogoutv;
 
 
         Intent intent = getIntent();
-        final int user_id = intent.getIntExtra("user_id", 0);
-        final String first_name = intent.getStringExtra("first_name");
-        final String last_name = intent.getStringExtra("last_name");
-        final String email = intent.getStringExtra("email");
-        final String password = intent.getStringExtra("password");
-        final int confirmed  = intent.getIntExtra("confirmed", 0);
-        final String register_code = intent.getStringExtra("register_code");
-        final String device_code = intent.getStringExtra("device_code");
-        final String admin_class_list = intent.getStringExtra("admin_class_list");
-        final String user_class_list = intent.getStringExtra("user_class_list");
-        final String androidID = Settings.Secure.getString(this.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
+        user = (User) intent.getSerializableExtra("user");
 
-        User user = new User(user_id, first_name, last_name, email, password, confirmed, register_code, device_code, admin_class_list, user_class_list);
+        // gets the android id of that current phone
 
-        if(first_name == null){
+        androidID = Settings.Secure.getString(this.getApplicationContext().getContentResolver(), Settings.Secure.ANDROID_ID);
 
-
-            Response.Listener<String> responseListener = new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-
-
-
-                    try {
-                        JSONObject jsonResponse = new JSONObject(response);
-                        boolean success = jsonResponse.getBoolean("success");
-
-                        if(success){
-
-
-                            int user_id = jsonResponse.getInt("user_id");
-                            String first_name = jsonResponse.getString("first_name");
-                            String last_name = jsonResponse.getString("last_name");
-                            String email = jsonResponse.getString("email");
-                            String password = jsonResponse.getString("password");
-                            int confirmed  = jsonResponse.getInt("confirmed");
-                            String register_code = jsonResponse.getString("register_code");
-                            String device_code = jsonResponse.getString("device_code");
-                            String admin_class_list = jsonResponse.getString("admin_class_list");
-                            String user_class_list = jsonResponse.getString("user_class_list");
-
-                            Intent intent = new Intent(UserHomePageActivity.this, UserHomePageActivity.class);
-
-                            intent.putExtra("user_id", user_id);
-                            intent.putExtra("first_name", first_name);
-                            intent.putExtra("last_name", last_name);
-                            intent.putExtra("email", email);
-                            intent.putExtra("password", password);
-                            intent.putExtra("confirmed", confirmed);
-                            intent.putExtra("register_code", register_code);
-                            intent.putExtra("device_code", device_code);
-                            intent.putExtra("admin_class_list", admin_class_list);
-                            intent.putExtra("user_class_list", user_class_list);
-
-
-
-                            UserHomePageActivity.this.startActivity(intent);
-
-
-
-
-                        }
-
-                        else{
-                            AlertDialog.Builder builder = new AlertDialog.Builder(UserHomePageActivity.this);
-                            builder.setMessage("Refresh Fail").setNegativeButton("Retry",null).create().show();
-                        }
-
-                    }
-                    catch (JSONException e){
-                        e.printStackTrace();
-
-                    }
-
-
-                }
-            };
-
-
-            DataRequest dataRequest = new DataRequest(Integer.toString(user_id), responseListener);
-            RequestQueue queue = Volley.newRequestQueue(UserHomePageActivity.this);
-            queue.add(dataRequest);
-
-        }
+        // device_string String array will have the android id linked for that account in [0] and the epoch time since that id was changed in [1]
 
         final String[] device_string;
         final String deviceID;
-        int numberOfClasses;
-        if( admin_class_list != null){
-        numberOfClasses= admin_class_list.split("\\$").length;}
-        else{
-            numberOfClasses = 0;
+        int numberOfClasses = 0;
+
+        // gets the number of classes that the user HAS MADE or is ADMIN OF i.e. 'my classes'
+
+        if (user.getAdmin_class_list() != null) {
+            numberOfClasses = user.getAdmin_class_list().split("\\$").length;
         }
 
-        if(numberOfClasses>=20){
+        // limits the user to 20 or less 'my classes'
+
+        if (numberOfClasses >= 20) {
             toMannyClasses = true;
         }
 
 
-        if(device_code != null){
+        // puts the the accounts androidID into the device_string along with the epoch time
 
-            device_string = device_code.split("\\$");
+        if (user.getDevice_code() != null) {
+
+            device_string = user.getDevice_code().split("\\$");
             deviceID = device_string[0];
 
-        }
-        else{
+        } else {
             deviceID = "";
         }
 
 
+        // gets updated data from the server and restarts the  user home page activity with the new data
+
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -210,54 +127,33 @@ public class UserHomePageActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
 
-
                         try {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
-                            if(success){
+                            if (success) {
 
 
-                                int user_id = jsonResponse.getInt("user_id");
-                                String first_name = jsonResponse.getString("first_name");
-                                String last_name = jsonResponse.getString("last_name");
-                                String email = jsonResponse.getString("email");
-                                String password = jsonResponse.getString("password");
-                                int confirmed  = jsonResponse.getInt("confirmed");
-                                String register_code = jsonResponse.getString("register_code");
-                                String device_code = jsonResponse.getString("device_code");
-                                String admin_class_list = jsonResponse.getString("admin_class_list");
-                                String user_class_list = jsonResponse.getString("user_class_list");
+                                User user = new User(jsonResponse.getInt("user_id"), jsonResponse.getString("first_name"), jsonResponse.getString("last_name"), jsonResponse.getString("email"), jsonResponse.getString("password")
+                                        , jsonResponse.getInt("confirmed"), jsonResponse.getString("register_code"), jsonResponse.getString("device_code"), jsonResponse.getString("admin_class_list"), jsonResponse.getString("user_class_list"));
+
 
                                 Intent intent = new Intent(UserHomePageActivity.this, UserHomePageActivity.class);
 
-                                intent.putExtra("user_id", user_id);
-                                intent.putExtra("first_name", first_name);
-                                intent.putExtra("last_name", last_name);
-                                intent.putExtra("email", email);
-                                intent.putExtra("password", password);
-                                intent.putExtra("confirmed", confirmed);
-                                intent.putExtra("register_code", register_code);
-                                intent.putExtra("device_code", device_code);
-                                intent.putExtra("admin_class_list", admin_class_list);
-                                intent.putExtra("user_class_list", user_class_list);
-
+                                intent.putExtra("user", user);
 
 
                                 UserHomePageActivity.this.startActivity(intent);
 
+                                finish();
 
 
-
-                            }
-
-                            else{
+                            } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(UserHomePageActivity.this);
-                                builder.setMessage("Refresh Fail").setNegativeButton("Retry",null).create().show();
+                                builder.setMessage("Refresh Fail").setNegativeButton("Retry", null).create().show();
                             }
 
-                        }
-                        catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
 
                         }
@@ -267,11 +163,9 @@ public class UserHomePageActivity extends AppCompatActivity {
                 };
 
 
-                DataRequest dataRequest = new DataRequest(Integer.toString(user_id), responseListener);
+                DataRequest dataRequest = new DataRequest(Integer.toString(user.getUser_id()), responseListener);
                 RequestQueue queue = Volley.newRequestQueue(UserHomePageActivity.this);
                 queue.add(dataRequest);
-
-
 
             }
         });
@@ -283,15 +177,11 @@ public class UserHomePageActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(UserHomePageActivity.this, ChangePasswordActivity.class);
 
-                intent.putExtra("user_id", user_id);
-                intent.putExtra("password", password);
+
+                intent.putExtra("user", user);
 
 
                 UserHomePageActivity.this.startActivity(intent);
-
-
-
-
 
 
             }
@@ -305,11 +195,7 @@ public class UserHomePageActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(UserHomePageActivity.this, RegisterDeviceActivity.class);
 
-                intent.putExtra("user_id", user_id);
-                intent.putExtra("device_code", device_code);
-
-
-
+                intent.putExtra("user", user);
 
 
                 UserHomePageActivity.this.startActivity(intent);
@@ -324,34 +210,21 @@ public class UserHomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(deviceID.compareTo(androidID) !=0){
+                if (deviceID.compareTo(androidID) != 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
-                }
-
-
-                else {
+                } else {
 
 
                     Intent intent = new Intent(UserHomePageActivity.this, JoinClassActivity.class);
 
-                    intent.putExtra("user_id", user_id);
-                    intent.putExtra("first_name", first_name);
-                    intent.putExtra("last_name", last_name);
-                    intent.putExtra("email", email);
-
-                    intent.putExtra("user_class_list", user_class_list);
+                    intent.putExtra("user", user);
 
 
                     UserHomePageActivity.this.startActivity(intent);
                 }
-
-
-
-
-
 
 
             }
@@ -360,18 +233,15 @@ public class UserHomePageActivity extends AppCompatActivity {
         });
 
 
-
         myClasses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(deviceID.compareTo(androidID) !=0){
+                if (deviceID.compareTo(androidID) != 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
-                }
-
-                else {
+                } else {
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -389,17 +259,13 @@ public class UserHomePageActivity extends AppCompatActivity {
 
                                     Intent intent = new Intent(UserHomePageActivity.this, MyClassesListActivity.class);
 
-                                    intent.putExtra("user_id", user_id);
+                                    intent.putExtra("user_id", user.getUser_id());
                                     intent.putExtra("class_names", class_names);
                                     intent.putExtra("class_ids", class_ids);
-                                    intent.getBooleanExtra("noClasses",noClasses);
-
-
-
+                                    intent.getBooleanExtra("noClasses", noClasses);
 
 
                                     UserHomePageActivity.this.startActivity(intent);
-
 
 
                                 } else {
@@ -417,10 +283,7 @@ public class UserHomePageActivity extends AppCompatActivity {
                     };
 
 
-
-
-
-                    MyClassListRequest myClassListRequest = new MyClassListRequest(Integer.toString(user_id), responseListener);
+                    MyClassListRequest myClassListRequest = new MyClassListRequest(Integer.toString(user.getUser_id()), responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(UserHomePageActivity.this);
                     queue.add(myClassListRequest);
@@ -436,14 +299,12 @@ public class UserHomePageActivity extends AppCompatActivity {
         joinedClasses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(deviceID.compareTo(androidID) !=0){
+                if (deviceID.compareTo(androidID) != 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
-                }
-
-                else {
+                } else {
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
@@ -456,24 +317,20 @@ public class UserHomePageActivity extends AppCompatActivity {
                                 String class_names = jsonResponse.getString("class_names");
                                 String record_ids = jsonResponse.getString("record_ids");
                                 String class_ids = jsonResponse.getString("class_ids");
-                               boolean noClasses = jsonResponse.getBoolean("noClasses");
+                                boolean noClasses = jsonResponse.getBoolean("noClasses");
 
                                 if (success) {
 
                                     Intent intent = new Intent(UserHomePageActivity.this, JoinedClassesListActivity.class);
 
-                                    intent.putExtra("user_id", user_id);
+                                    intent.putExtra("user_id", user.getUser_id());
                                     intent.putExtra("class_names", class_names);
                                     intent.putExtra("record_ids", record_ids);
                                     intent.putExtra("class_ids", class_ids);
-                                    intent.getBooleanExtra("noClasses",noClasses);
-
-
-
+                                    intent.getBooleanExtra("noClasses", noClasses);
 
 
                                     UserHomePageActivity.this.startActivity(intent);
-
 
 
                                 } else {
@@ -491,10 +348,7 @@ public class UserHomePageActivity extends AppCompatActivity {
                     };
 
 
-
-
-
-                    ClassListRequest classListRequest = new ClassListRequest(Integer.toString(user_id), responseListener);
+                    ClassListRequest classListRequest = new ClassListRequest(Integer.toString(user.getUser_id()), responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(UserHomePageActivity.this);
                     queue.add(classListRequest);
@@ -512,24 +366,20 @@ public class UserHomePageActivity extends AppCompatActivity {
         createAClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(deviceID.compareTo(androidID) !=0){
+                if (deviceID.compareTo(androidID) != 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
-                }
-                else if(toMannyClasses == true){
+                } else if (toMannyClasses == true) {
                     Toast toast = Toast.makeText(getApplicationContext(), "You have too many classes, please delete some before adding another",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
-                }
-
-                else {
+                } else {
                     Intent intent = new Intent(UserHomePageActivity.this, CreateAClassActivity.class);
 
-                    intent.putExtra("user_id", user_id);
-
+                    intent.putExtra("user_id", user.getUser_id());
 
 
                     UserHomePageActivity.this.startActivity(intent);
@@ -542,54 +392,7 @@ public class UserHomePageActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
-        registerDevice.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(UserHomePageActivity.this, RegisterDeviceActivity.class);
-
-                intent.putExtra("user_id", user_id);
-                intent.putExtra("device_code", device_code);
-
-
-
-
-
-                UserHomePageActivity.this.startActivity(intent);
-
-
-            }
-
-
-        });
-
-
-        changePassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(UserHomePageActivity.this, ChangePasswordActivity.class);
-
-                intent.putExtra("user_id", user_id);
-                intent.putExtra("password", password);
-
-
-                UserHomePageActivity.this.startActivity(intent);
-
-
-
-
-
-
-            }
-
-
-        });
-
+        
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -597,46 +400,15 @@ public class UserHomePageActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(UserHomePageActivity.this, LoginActivity.class);
 
-
-
                 finish();
 
                 UserHomePageActivity.this.startActivity(intent);
-
-
-
-
 
 
             }
 
 
         });
-
-
-
-
-
-
-
-
-        //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, R.layout.program_list, testList);
-       // ArrayAdapter<String> arrayAdapter = new CustomListAdapter(this , R.layout.program_list , testList);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }
