@@ -29,7 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Typeface mytypeface = Typeface.createFromAsset(getAssets(),"Minecraftia-Regular.ttf");
+        Typeface mytypeface = Typeface.createFromAsset(getAssets(), "Minecraftia-Regular.ttf");
 
         TextView regFirstNamev = (TextView) findViewById(R.id.regFirstName);
         regFirstNamev.setTypeface(mytypeface);
@@ -53,21 +53,26 @@ public class RegisterActivity extends AppCompatActivity {
         regButtonv.setTypeface(mytypeface);
 
 
-        final EditText firstNameText = (EditText) findViewById(R.id.regFirstName);
-        final EditText lastNameText = (EditText) findViewById(R.id.regLastName);
-        final EditText emailText = (EditText) findViewById(R.id.regEmail);
-        final EditText passText = (EditText) findViewById(R.id.regPassword);
-        final EditText passConText = (EditText) findViewById(R.id.regPasswordCon);
+        final EditText firstNameText = (EditText) regFirstNamev;
+        final EditText lastNameText = (EditText) regLastNamev;
+        final EditText emailText = (EditText) regEmailv;
+        final EditText passText = (EditText) regPasswordv;
+        final EditText passConText = (EditText) regPasswordConv;
+        final Button buttonRegister = (Button) regButtonv;
 
 
-        final Button buttonRegister = (Button) findViewById(R.id.regButton);
-
+        // when the register button is clicked
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                // flag for checking the correctness of the field
                 boolean noError = true;
+                // object to generate the code to be sent to the users email
                 CodeGenerator regCode = new CodeGenerator();
+                // fields that the user has filled out except the register code, that is filled by the CodeGenerator object
                 final String first_name = firstNameText.getText().toString();
                 final String last_name = lastNameText.getText().toString();
                 final String email = emailText.getText().toString();
@@ -75,67 +80,80 @@ public class RegisterActivity extends AppCompatActivity {
                 final String password_con = passConText.getText().toString();
                 final String register_code = regCode.nextCode().toString();
 
-                if(first_name.length()<1){
+
+                // if any of these next if statements returns true then the noError flag is set to false
+
+                // the first name has to be greater than 1 char
+
+                if (first_name.length() < 1) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("Please Enter a First Name").setNegativeButton("Retry",null).create().show();
-
-                }
-                else if(last_name.length()<1){
-                    noError = false;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("Please Enter a Last Name").setNegativeButton("Retry",null).create().show();
-
-                }
-
-                else if(email.length()<1){
-                    noError = false;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("Please Enter an Email Address").setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Please Enter a First Name").setNegativeButton("Retry", null).create().show();
 
                 }
 
-                else if(password.length()<1){
+
+                // the last name has to be greater than 1 char
+
+                else if (last_name.length() < 1) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("Please Enter an Password").setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Please Enter a Last Name").setNegativeButton("Retry", null).create().show();
 
                 }
 
-                else if(password_con.length()<1){
+                // the email has to be greater than 1 char
+
+                else if (email.length() < 1) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("Please Confirm the Password").setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Please Enter an Email Address").setNegativeButton("Retry", null).create().show();
 
                 }
 
-                else if(!password.equals(password_con)){
+                // making sure they enter a password and its length is at least 6 chars
+
+                else if (password.length() <= 5) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("Passwords Do Not Match").setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Password Must Contain at Least 6 Characters").setNegativeButton("Retry", null).create().show();
                 }
-                else if(!first_name.matches("[a-zA-Z]+")){
+
+                // making sure that the two passwords match
+
+                else if (!password.equals(password_con)) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("First Name Can Only Contain Letters").setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Passwords Do Not Match").setNegativeButton("Retry", null).create().show();
                 }
-                else if(!last_name.matches("[a-zA-Z]+")) {
+
+                // first name regex
+
+                else if (!first_name.matches("^[a-z ,.'-]+$")) {
+                    noError = false;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
+                    builder.setMessage("First Name Can Only Contain Letters").setNegativeButton("Retry", null).create().show();
+                }
+
+                // last name regex
+
+                else if (!last_name.matches("^[a-z ,.'-]+$")) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setMessage("Last Name Can Only Contain Letters").setNegativeButton("Retry", null).create().show();
                 }
 
-                else if(!email.matches("[a-z0-9]+([-+._][a-z0-9]+){0,2}@.*?(\\.(a(?:[cdefgilmnoqrstuwxz]|ero|(?:rp|si)a)|b(?:[abdefghijmnorstvwyz]iz)|c(?:[acdfghiklmnoruvxyz]|at|o(?:m|op))|d[ejkmoz]|e(?:[ceghrstu]|du)|f[ijkmor]|g(?:[abdefghilmnpqrstuwy]|ov)|h[kmnrtu]|i(?:[delmnoqrst]|n(?:fo|t))|j(?:[emop]|obs)|k[eghimnprwyz]|l[abcikrstuvy]|m(?:[acdeghklmnopqrstuvwxyz]|il|obi|useum)|n(?:[acefgilopruz]|ame|et)|o(?:m|rg)|p(?:[aefghklmnrstwy]|ro)|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|t(?:[cdfghjklmnoprtvwz]|(?:rav)?el)|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw])\\b){1,2}")){
+                // email regex
+
+                else if (!email.matches("[a-z0-9]+([-+._][a-z0-9]+){0,2}@.*?(\\.(a(?:[cdefgilmnoqrstuwxz]|ero|(?:rp|si)a)|b(?:[abdefghijmnorstvwyz]iz)|c(?:[acdfghiklmnoruvxyz]|at|o(?:m|op))|d[ejkmoz]|e(?:[ceghrstu]|du)|f[ijkmor]|g(?:[abdefghilmnpqrstuwy]|ov)|h[kmnrtu]|i(?:[delmnoqrst]|n(?:fo|t))|j(?:[emop]|obs)|k[eghimnprwyz]|l[abcikrstuvy]|m(?:[acdeghklmnopqrstuvwxyz]|il|obi|useum)|n(?:[acefgilopruz]|ame|et)|o(?:m|rg)|p(?:[aefghklmnrstwy]|ro)|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|t(?:[cdfghjklmnoprtvwz]|(?:rav)?el)|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw])\\b){1,2}")) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setMessage("Please Enter A Valid Email Address").setNegativeButton("Retry", null).create().show();
 
                 }
-                else if(password.length() <=5){
-                    noError = false;
-                    AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                    builder.setMessage("Password Must Contain at Least 6 Characters").setNegativeButton("Retry",null).create().show();
-                }
+
+
+                // response from the server confirming that the unconfirmed user has been inserted into the table
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -147,12 +165,16 @@ public class RegisterActivity extends AppCompatActivity {
 
                             boolean success = jsonResponse.getBoolean("success");
 
-                            if(success){
+                            if (success) {
                                 Intent intent = new Intent(RegisterActivity.this, ConfirmNewUser.class);
                                 RegisterActivity.this.startActivity(intent);
 
+                                // SendMailTask sends an email containing the register code to the email that the user entered in the registration page
+
                                 new SendMailTask(RegisterActivity.this).execute("iattend.no.respond@gmail.com",
-                                        "iattend@wvu",email,"REGISTER CODE FOR iAttend", "Register code: "+register_code);
+                                        "iattend@wvu", email, "REGISTER CODE FOR iAttend", "Register code: " + register_code);
+
+                                // alerts the user that an email has been sent
 
                                 Toast toast = Toast.makeText(getApplicationContext(), "Please check your email for a confirmation code.",
                                         Toast.LENGTH_LONG);
@@ -160,9 +182,12 @@ public class RegisterActivity extends AppCompatActivity {
                                 toast.show();
 
 
-                            }else{
+                            } else {
+
+                                // if the email that the user entered in already CONFIRMED it cannot be used again
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
-                                builder.setMessage("Email is already Registered").setNegativeButton("Retry",null).create().show();
+                                builder.setMessage("Email is already Registered").setNegativeButton("Retry", null).create().show();
                             }
 
 
@@ -176,28 +201,20 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
+                /* if the flag does not return as false then the data is sent to the server and a new user is added to the table, the server will then send
+                   a response that the email the user entered is not already in use by a confirmed user and then sends an email.
+                */
 
-                if(noError == true){
-                RegisterRequest registerRequest = new RegisterRequest(first_name,last_name,email,password, register_code, responseListener);
+                if (noError == true) {
+                    RegisterRequest registerRequest = new RegisterRequest(first_name, last_name, email, password, register_code, responseListener);
 
-                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-                queue.add(registerRequest);}
-
+                    RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+                    queue.add(registerRequest);
+                }
 
 
             }
         });
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

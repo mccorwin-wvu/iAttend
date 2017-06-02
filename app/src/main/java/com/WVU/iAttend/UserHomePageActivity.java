@@ -171,6 +171,9 @@ public class UserHomePageActivity extends AppCompatActivity {
         });
 
 
+        // sends the user along with the user object to the change password activity
+
+
         changePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,6 +192,11 @@ public class UserHomePageActivity extends AppCompatActivity {
 
         });
 
+
+
+        // sends the user along with the user object to the register device activity
+
+
         registerDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,6 +213,10 @@ public class UserHomePageActivity extends AppCompatActivity {
 
 
         });
+
+
+        // sends the user along with the user object to the join a class activity
+
 
         joinAClass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,9 +245,14 @@ public class UserHomePageActivity extends AppCompatActivity {
         });
 
 
+        // sends the user to the admin class list
+
         myClasses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // if the user does not have their device register to their app then it will not let them go to the class list
+
                 if (deviceID.compareTo(androidID) != 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
                             Toast.LENGTH_LONG);
@@ -250,12 +267,23 @@ public class UserHomePageActivity extends AppCompatActivity {
                                 JSONObject jsonResponse = new JSONObject(response);
 
                                 boolean success = jsonResponse.getBoolean("success");
+
+                                // String of admin class names from the server separated with a '$'
+
                                 String class_names = jsonResponse.getString("class_names");
 
+                                // String of admin class ids from the server separated with a '$'
+
                                 String class_ids = jsonResponse.getString("class_ids");
+
+                                // boolean value that is true if the user has no admin classes
+
                                 boolean noClasses = jsonResponse.getBoolean("noClasses");
 
                                 if (success) {
+
+
+                                    // sends that info to the my classes list
 
                                     Intent intent = new Intent(UserHomePageActivity.this, MyClassesListActivity.class);
 
@@ -299,11 +327,14 @@ public class UserHomePageActivity extends AppCompatActivity {
         joinedClasses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if (deviceID.compareTo(androidID) != 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
+
                 } else {
                     Response.Listener<String> responseListener = new Response.Listener<String>() {
                         @Override
@@ -312,14 +343,28 @@ public class UserHomePageActivity extends AppCompatActivity {
                             try {
 
                                 JSONObject jsonResponse = new JSONObject(response);
-
                                 boolean success = jsonResponse.getBoolean("success");
+
+                                // String of joined class names from the server separated with a '$'
+
                                 String class_names = jsonResponse.getString("class_names");
+
+                                // String of joined record ids from the server separated with a '$'
+
                                 String record_ids = jsonResponse.getString("record_ids");
+
+                                // String of joined class ids from the server separated with a '$'
+
                                 String class_ids = jsonResponse.getString("class_ids");
+
+                                // boolean that is true if the current user has joined no classes
+
                                 boolean noClasses = jsonResponse.getBoolean("noClasses");
 
                                 if (success) {
+
+
+                                    // sends the user with the above data to the joined class list activity
 
                                     Intent intent = new Intent(UserHomePageActivity.this, JoinedClassesListActivity.class);
 
@@ -366,16 +411,25 @@ public class UserHomePageActivity extends AppCompatActivity {
         createAClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // checks to see if the device is registered
+
                 if (deviceID.compareTo(androidID) != 0) {
                     Toast toast = Toast.makeText(getApplicationContext(), "Your Account Is Not Registered To This Device, Please Register the Device First",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
+
+                    // checks to see if the user has more than 20 classes created
+
                 } else if (toMannyClasses == true) {
                     Toast toast = Toast.makeText(getApplicationContext(), "You have too many classes, please delete some before adding another",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
+
+                    // sends the user to the create a class activity along with user_id
+
                 } else {
                     Intent intent = new Intent(UserHomePageActivity.this, CreateAClassActivity.class);
 
@@ -392,7 +446,8 @@ public class UserHomePageActivity extends AppCompatActivity {
         });
 
 
-        
+
+        // ends the user home page activity and sends the user to the longing activity
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
