@@ -12,7 +12,11 @@ import java.util.Map;
 
 public class RegisterRequest extends StringRequest{
 
-    private static final String REGISTER_REQUEST_URL = "http://98.239.148.75/Register.php";
+    // old url = "http://98.239.148.75/Register.php"
+
+
+
+    private static final String REGISTER_REQUEST_URL = "https://strawless-overload.000webhostapp.com/Register.php";
     private Map<String,String> params;
     public RegisterRequest(String first_name, String last_name, String email, String password, String register_code, Response.Listener<String> listener){
 

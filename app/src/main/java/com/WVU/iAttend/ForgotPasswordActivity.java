@@ -26,7 +26,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        Typeface mytypeface = Typeface.createFromAsset(getAssets(),"Minecraftia-Regular.ttf");
+        Typeface mytypeface = Typeface.createFromAsset(getAssets(), "Minecraftia-Regular.ttf");
 
         TextView iAttendTextForgotPasswordv = (TextView) findViewById(R.id.iAttendTextForgotPassword);
         iAttendTextForgotPasswordv.setTypeface(mytypeface);
@@ -41,22 +41,20 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         forgotPasswordTextv.setTypeface(mytypeface);
 
 
-
-        final EditText forgotPasswordEmail = (EditText) findViewById(R.id.forgotPasswordEmailBox);
-        final Button forgotPasswordButton = (Button) findViewById(R.id.forgotPasswordButton);
+        final EditText forgotPasswordEmail = (EditText) forgotPasswordEmailBoxv;
+        final Button forgotPasswordButton = (Button) forgotPasswordButtonv;
 
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
+                // the email of the account with the forgotten password
+
                 final String email = forgotPasswordEmail.getText().toString();
 
 
-
-
-
-
+                // response from the server that contains the email, password and that it is a confirmed user
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -66,17 +64,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
-                            if(success){
+                            // if the email is found in the database
 
-
+                            if (success) {
 
                                 String email = jsonResponse.getString("email");
                                 String password = jsonResponse.getString("password");
-                                int confirmed  = jsonResponse.getInt("confirmed");
+                                int confirmed = jsonResponse.getInt("confirmed");
 
-                                if(confirmed == 0){
+                                // if the email entered is not confirmed it sends the user to the confirm user page
 
-                                    Intent intent = new Intent(ForgotPasswordActivity.this,ConfirmNewUser.class);
+                                if (confirmed == 0) {
+
+                                    Intent intent = new Intent(ForgotPasswordActivity.this, ConfirmNewUser.class);
 
                                     ForgotPasswordActivity.this.startActivity(intent);
 
@@ -87,12 +87,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
 
                                 }
+
+                                // if the user is confirmed the password is sent to that users email
+
                                 else {
                                     Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
 
 
                                     new SendMailTask(ForgotPasswordActivity.this).execute("iattend.no.respond@gmail.com",
-                                            "iattend@wvu",email,"PASSWORD FOR iAttend", "Password: "+password);
+                                            "iattend@wvu", email, "PASSWORD FOR iAttend", "Password: " + password);
 
                                     Toast toast = Toast.makeText(getApplicationContext(), "Please check your email for your password.",
                                             Toast.LENGTH_LONG);
@@ -106,13 +109,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                             }
 
-                            else{
+
+                            // if the email is not found in the database
+
+                            else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ForgotPasswordActivity.this);
-                                builder.setMessage("Invalid Email").setNegativeButton("Retry",null).create().show();
+                                builder.setMessage("Invalid Email").setNegativeButton("Retry", null).create().show();
                             }
 
-                        }
-                        catch (JSONException e){
+                        } catch (JSONException e) {
                             e.printStackTrace();
 
                         }
@@ -122,7 +127,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 };
 
 
-
+                // the email is sent to the server and the email, password, and confirmed flag is returned in the responseListener
 
 
                 ForgotPasswordRequest forgotPasswordRequest = new ForgotPasswordRequest(email, responseListener);
@@ -130,32 +135,8 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 queue.add(forgotPasswordRequest);
 
 
-
-
-
-
-
-
-
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

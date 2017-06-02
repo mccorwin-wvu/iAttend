@@ -166,6 +166,9 @@ public class RegisterActivity extends AppCompatActivity {
                             boolean success = jsonResponse.getBoolean("success");
 
                             if (success) {
+
+                                // sends the user to the confirm user activity
+
                                 Intent intent = new Intent(RegisterActivity.this, ConfirmNewUser.class);
                                 RegisterActivity.this.startActivity(intent);
 

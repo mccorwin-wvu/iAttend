@@ -26,7 +26,7 @@ public class ConfirmNewUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_new_user);
 
-        Typeface mytypeface = Typeface.createFromAsset(getAssets(),"Minecraftia-Regular.ttf");
+        Typeface mytypeface = Typeface.createFromAsset(getAssets(), "Minecraftia-Regular.ttf");
 
         TextView confirm_user_Buttonv = (TextView) findViewById(R.id.confirm_user_Button);
         confirm_user_Buttonv.setTypeface(mytypeface);
@@ -41,12 +41,9 @@ public class ConfirmNewUser extends AppCompatActivity {
         text_confrim_userv.setTypeface(mytypeface);
 
 
-        final EditText userEmailText = (EditText) findViewById(R.id.confirm_user_email);
-        final EditText userCodeText = (EditText) findViewById(R.id.confirm_user_code);
-
-
-        final Button buttonRegister = (Button) findViewById(R.id.confirm_user_Button);
-
+        final EditText userEmailText = (EditText) confirm_user_emailv;
+        final EditText userCodeText = (EditText) confirm_user_codev;
+        final Button buttonRegister = (Button) confirm_user_Buttonv;
 
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
@@ -57,27 +54,24 @@ public class ConfirmNewUser extends AppCompatActivity {
                 final String email = userEmailText.getText().toString();
                 final String codeText = userCodeText.getText().toString();
 
-                 if(email.length()<1){
+                // error checking for the code
+
+                if (codeText.length() < 1) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmNewUser.this);
-                    builder.setMessage("Please Enter an Email Address").setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Please Enter The Code you received via email").setNegativeButton("Retry", null).create().show();
+
+                    // error checking for the email
+
+                } else if (!email.matches("[a-z0-9]+([-+._][a-z0-9]+){0,2}@.*?(\\.(a(?:[cdefgilmnoqrstuwxz]|ero|(?:rp|si)a)|b(?:[abdefghijmnorstvwyz]iz)|c(?:[acdfghiklmnoruvxyz]|at|o(?:m|op))|d[ejkmoz]|e(?:[ceghrstu]|du)|f[ijkmor]|g(?:[abdefghilmnpqrstuwy]|ov)|h[kmnrtu]|i(?:[delmnoqrst]|n(?:fo|t))|j(?:[emop]|obs)|k[eghimnprwyz]|l[abcikrstuvy]|m(?:[acdeghklmnopqrstuvwxyz]|il|obi|useum)|n(?:[acefgilopruz]|ame|et)|o(?:m|rg)|p(?:[aefghklmnrstwy]|ro)|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|t(?:[cdfghjklmnoprtvwz]|(?:rav)?el)|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw])\\b){1,2}")) {
+                    noError = false;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmNewUser.this);
+                    builder.setMessage("Please Enter A Valid Email Address").setNegativeButton("Retry", null).create().show();
 
                 }
 
-                 else if(codeText.length()<1){
-                     noError = false;
-                     AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmNewUser.this);
-                     builder.setMessage("Please Enter an Email Address").setNegativeButton("Retry",null).create().show();
 
-                 }
-
-
-                 else if(!email.matches("[a-z0-9]+([-+._][a-z0-9]+){0,2}@.*?(\\.(a(?:[cdefgilmnoqrstuwxz]|ero|(?:rp|si)a)|b(?:[abdefghijmnorstvwyz]iz)|c(?:[acdfghiklmnoruvxyz]|at|o(?:m|op))|d[ejkmoz]|e(?:[ceghrstu]|du)|f[ijkmor]|g(?:[abdefghilmnpqrstuwy]|ov)|h[kmnrtu]|i(?:[delmnoqrst]|n(?:fo|t))|j(?:[emop]|obs)|k[eghimnprwyz]|l[abcikrstuvy]|m(?:[acdeghklmnopqrstuvwxyz]|il|obi|useum)|n(?:[acefgilopruz]|ame|et)|o(?:m|rg)|p(?:[aefghklmnrstwy]|ro)|qa|r[eosuw]|s[abcdeghijklmnortuvyz]|t(?:[cdfghjklmnoprtvwz]|(?:rav)?el)|u[agkmsyz]|v[aceginu]|w[fs]|y[etu]|z[amw])\\b){1,2}")){
-                     noError = false;
-                     AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmNewUser.this);
-                     builder.setMessage("Please Enter A Valid Email Address").setNegativeButton("Retry", null).create().show();
-
-                 }
+                // response from the server
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -88,10 +82,11 @@ public class ConfirmNewUser extends AppCompatActivity {
 
                             boolean success = jsonResponse.getBoolean("success");
 
-                            if(success){
+                            // if the response from the server is successful and the user then becomes confirmed, then the user is notified then sent to the login activity
+
+                            if (success) {
                                 Intent intent = new Intent(ConfirmNewUser.this, LoginActivity.class);
                                 ConfirmNewUser.this.startActivity(intent);
-
 
 
                                 Toast toast = Toast.makeText(getApplicationContext(), "User Confirmed Successfully.",
@@ -100,9 +95,12 @@ public class ConfirmNewUser extends AppCompatActivity {
                                 toast.show();
 
 
-                            }else{
+                            } else {
+
+                                // if the code or email is not found or entered incorrectly then the user is notified to try again
+
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ConfirmNewUser.this);
-                                builder.setMessage("Email or Code is Incorrect").setNegativeButton("Retry",null).create().show();
+                                builder.setMessage("Email or Code is Incorrect").setNegativeButton("Retry", null).create().show();
                             }
 
 
@@ -115,18 +113,18 @@ public class ConfirmNewUser extends AppCompatActivity {
                 };
 
 
+                // if the noError flag is not false then the data is sent to the server and the server will send a response to the responseListener above
 
-                if(noError == true){
-                    ConfirmRequest confirmRequest = new ConfirmRequest(email,codeText,responseListener);
+                if (noError == true) {
+                    ConfirmRequest confirmRequest = new ConfirmRequest(email, codeText, responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(ConfirmNewUser.this);
-                    queue.add(confirmRequest);}
+                    queue.add(confirmRequest);
+                }
 
 
             }
         });
-
-
 
 
     }
