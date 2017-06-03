@@ -12,7 +12,9 @@ import java.util.Map;
 
 public class ConfirmRequest extends StringRequest {
 
-    private static final String CONFIRM_REQUEST_URL = "http://98.239.148.75/Confirm.php";
+    // old url = "http://98.239.148.75/Confirm.php"
+
+    private static final String CONFIRM_REQUEST_URL = "https://strawless-overload.000webhostapp.com/Confirm.php";
     private Map<String,String> params;
     public ConfirmRequest(String email, String register_code, Response.Listener<String> listener){
 

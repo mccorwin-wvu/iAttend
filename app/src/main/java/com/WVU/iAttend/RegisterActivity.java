@@ -1,5 +1,6 @@
 package com.WVU.iAttend;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
@@ -60,12 +61,19 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText passConText = (EditText) regPasswordConv;
         final Button buttonRegister = (Button) regButtonv;
 
+        final ProgressDialog loadingDialog = new ProgressDialog(RegisterActivity.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.setIndeterminate(true);
+        loadingDialog.setTitle("Loading......");
+        loadingDialog.setMessage("Please Wait");
+
 
         // when the register button is clicked
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
 
 
                 // flag for checking the correctness of the field
@@ -129,7 +137,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // first name regex
 
-                else if (!first_name.matches("^[a-z ,.'-]+$")) {
+                else if (!first_name.matches("^[a-zA-Z ,.'-]+$")) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setMessage("First Name Can Only Contain Letters").setNegativeButton("Retry", null).create().show();
@@ -137,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 // last name regex
 
-                else if (!last_name.matches("^[a-z ,.'-]+$")) {
+                else if (!last_name.matches("^[a-zA-Z ,.'-]+$")) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(RegisterActivity.this);
                     builder.setMessage("Last Name Can Only Contain Letters").setNegativeButton("Retry", null).create().show();
@@ -161,6 +169,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                         try {
+
+                            loadingDialog.hide();
+
                             JSONObject jsonResponse = new JSONObject(response);
 
                             boolean success = jsonResponse.getBoolean("success");
@@ -175,7 +186,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 // SendMailTask sends an email containing the register code to the email that the user entered in the registration page
 
                                 new SendMailTask(RegisterActivity.this).execute("iattend.no.respond@gmail.com",
-                                        "iattend@wvu", email, "REGISTER CODE FOR iAttend", "Register code: " + register_code);
+                                        "killza10t", email, "REGISTER CODE FOR iAttend", "Register code: " + register_code);
 
                                 // alerts the user that an email has been sent
 
@@ -209,6 +220,9 @@ public class RegisterActivity extends AppCompatActivity {
                 */
 
                 if (noError == true) {
+
+                    loadingDialog.show();
+
                     RegisterRequest registerRequest = new RegisterRequest(first_name, last_name, email, password, register_code, responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);

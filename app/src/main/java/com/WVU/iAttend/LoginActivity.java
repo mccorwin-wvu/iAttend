@@ -1,5 +1,6 @@
 package com.WVU.iAttend;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.widget.TextViewCompat;
@@ -69,6 +70,16 @@ public class LoginActivity extends AppCompatActivity {
         final TextView forgotPasswordText = forgotPasswordHomePagev;
 
 
+        // loading dialog
+
+
+        final ProgressDialog loadingDialog = new ProgressDialog(LoginActivity.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.setIndeterminate(true);
+        loadingDialog.setTitle("Loading......");
+        loadingDialog.setMessage("Please Wait");
+
+
 
         // sends the user to the forgot password activity
 
@@ -98,6 +109,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                loadingDialog.show();
+
                 // contains the the current contents of the email and password box at the time the login button is pressed
 
                 final String email = loginEmail.getText().toString();
@@ -114,6 +127,8 @@ public class LoginActivity extends AppCompatActivity {
                     // try block to catch any exceptions with the JSON string
 
                     try {
+
+                        loadingDialog.hide();
 
                         // a JSON response object that contains all the data
 

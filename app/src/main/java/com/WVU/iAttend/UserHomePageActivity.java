@@ -1,8 +1,10 @@
 package com.WVU.iAttend;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.os.Process;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -75,6 +77,13 @@ public class UserHomePageActivity extends AppCompatActivity {
         Button changePassword = (Button) UserHomeChangePasswordv;
         Button logout = (Button) UserHomeLogoutv;
 
+        final ProgressDialog loadingDialog = new ProgressDialog(UserHomePageActivity.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.setIndeterminate(true);
+        loadingDialog.setTitle("Loading......");
+        loadingDialog.setMessage("Please Wait");
+
+
 
         Intent intent = getIntent();
 
@@ -121,6 +130,8 @@ public class UserHomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                loadingDialog.show();
+
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -142,10 +153,14 @@ public class UserHomePageActivity extends AppCompatActivity {
 
                                 intent.putExtra("user", user);
 
+                                loadingDialog.hide();
+
+                                finish();
 
                                 UserHomePageActivity.this.startActivity(intent);
 
-                                finish();
+
+
 
 
                             } else {

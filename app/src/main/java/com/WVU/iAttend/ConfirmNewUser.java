@@ -1,5 +1,6 @@
 package com.WVU.iAttend;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
@@ -45,6 +46,12 @@ public class ConfirmNewUser extends AppCompatActivity {
         final EditText userCodeText = (EditText) confirm_user_codev;
         final Button buttonRegister = (Button) confirm_user_Buttonv;
 
+        final ProgressDialog loadingDialog = new ProgressDialog(ConfirmNewUser.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.setIndeterminate(true);
+        loadingDialog.setTitle("Loading......");
+        loadingDialog.setMessage("Please Wait");
+
 
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,6 +85,9 @@ public class ConfirmNewUser extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+
+                            loadingDialog.hide();
+
                             JSONObject jsonResponse = new JSONObject(response);
 
                             boolean success = jsonResponse.getBoolean("success");
@@ -116,6 +126,9 @@ public class ConfirmNewUser extends AppCompatActivity {
                 // if the noError flag is not false then the data is sent to the server and the server will send a response to the responseListener above
 
                 if (noError == true) {
+
+                    loadingDialog.show();
+
                     ConfirmRequest confirmRequest = new ConfirmRequest(email, codeText, responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(ConfirmNewUser.this);

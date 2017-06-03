@@ -12,7 +12,9 @@ import java.util.Map;
 
 public class ForgotPasswordRequest extends StringRequest {
 
-    private static final String REGISTER_REQUEST_URL = "http://98.239.148.75/ForgotPass.php";
+    // old url = "http://98.239.148.75/ForgotPass.php"
+
+    private static final String REGISTER_REQUEST_URL = "https://strawless-overload.000webhostapp.com/ForgotPass.php";
     private Map<String,String> params;
     public ForgotPasswordRequest(String email, Response.Listener<String> listener){
 

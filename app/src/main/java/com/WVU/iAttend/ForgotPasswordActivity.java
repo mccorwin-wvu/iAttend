@@ -1,5 +1,6 @@
 package com.WVU.iAttend;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
@@ -44,6 +45,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         final EditText forgotPasswordEmail = (EditText) forgotPasswordEmailBoxv;
         final Button forgotPasswordButton = (Button) forgotPasswordButtonv;
 
+        final ProgressDialog loadingDialog = new ProgressDialog(ForgotPasswordActivity.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.setIndeterminate(true);
+        loadingDialog.setTitle("Loading......");
+        loadingDialog.setMessage("Please Wait");
+
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +68,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+
+                            loadingDialog.hide();
+
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
 
@@ -94,8 +104,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                                     Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
 
 
+                                    loadingDialog.show();
+
                                     new SendMailTask(ForgotPasswordActivity.this).execute("iattend.no.respond@gmail.com",
                                             "iattend@wvu", email, "PASSWORD FOR iAttend", "Password: " + password);
+
+                                    loadingDialog.hide();
 
                                     Toast toast = Toast.makeText(getApplicationContext(), "Please check your email for your password.",
                                             Toast.LENGTH_LONG);
@@ -129,7 +143,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                 // the email is sent to the server and the email, password, and confirmed flag is returned in the responseListener
 
-
+                loadingDialog.show();
                 ForgotPasswordRequest forgotPasswordRequest = new ForgotPasswordRequest(email, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(ForgotPasswordActivity.this);
                 queue.add(forgotPasswordRequest);
