@@ -12,7 +12,9 @@ import java.util.Map;
 
 public class ChangePasswordRequest extends StringRequest {
 
-    private static final String REGISTER_REQUEST_URL = "http://98.239.148.75/ChangePassword.php";
+    // old url = "http://98.239.148.75/ChangePassword.php"
+
+    private static final String REGISTER_REQUEST_URL = "https://strawless-overload.000webhostapp.com/ChangePassword.php";
     private Map<String,String> params;
     public ChangePasswordRequest(String user_id, String password, Response.Listener<String> listener){
 

@@ -6,13 +6,13 @@ import com.android.volley.toolbox.StringRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Matt on 1/15/2017.
- */
+// old url = "http://98.239.148.75/RegisterDev.php"
+
+
 
 public class RegisterDeviceRequest extends StringRequest {
 
-    private static final String CONFIRM_REQUEST_URL = "http://98.239.148.75/RegisterDev.php";
+    private static final String CONFIRM_REQUEST_URL = "https://strawless-overload.000webhostapp.com/RegisterDev.php";
     private Map<String,String> params;
     public RegisterDeviceRequest(String user_id, String device_code, Response.Listener<String> listener){
 

@@ -1,5 +1,6 @@
 package com.WVU.iAttend;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AlertDialog;
@@ -21,11 +22,15 @@ import org.json.JSONObject;
 
 
 public class ChangePasswordActivity extends AppCompatActivity {
-    int user_id_home;
-    public void onBackPressed()
-    {
+
+    private User user;
+
+    // sends the user to the user home page when the back button in pressed
+
+    public void onBackPressed() {
         Intent intent = new Intent(ChangePasswordActivity.this, UserHomePageActivity.class);
-        intent.putExtra("user_id", user_id_home);
+        intent.putExtra("user", user);
+        finish();
         ChangePasswordActivity.this.startActivity(intent);
 
         //super.onBackPressed();
@@ -37,7 +42,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_password);
 
 
-        Typeface mytypeface = Typeface.createFromAsset(getAssets(),"Minecraftia-Regular.ttf");
+        Typeface mytypeface = Typeface.createFromAsset(getAssets(), "Minecraftia-Regular.ttf");
 
         TextView UserHomeChangePasswordTextv = (TextView) findViewById(R.id.UserHomeChangePasswordText);
         UserHomeChangePasswordTextv.setTypeface(mytypeface);
@@ -55,68 +60,73 @@ public class ChangePasswordActivity extends AppCompatActivity {
         UserHomeChangePasswordButtonv.setTypeface(mytypeface);
 
 
-        final EditText oldPass = (EditText) findViewById(R.id.UserHomeChangePasswordOldPassword);
-        final EditText newPass = (EditText) findViewById(R.id.UserHomeChangePasswordNewPassword);
-        final EditText confirmNewPass = (EditText) findViewById(R.id.UserHomeChangePasswordConfirm);
-        final Button buttonPass = (Button) findViewById(R.id.UserHomeChangePasswordButton);
+        final EditText oldPass = (EditText) UserHomeChangePasswordOldPasswordv;
+        final EditText newPass = (EditText) UserHomeChangePasswordNewPasswordv;
+        final EditText confirmNewPass = (EditText) UserHomeChangePasswordConfirmv;
+        final Button buttonPass = (Button) UserHomeChangePasswordButtonv;
+
+        final ProgressDialog loadingDialog = new ProgressDialog(ChangePasswordActivity.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.setIndeterminate(true);
+        loadingDialog.setTitle("Loading......");
+        loadingDialog.setMessage("Please Wait");
 
         Intent intent = getIntent();
 
-        final String oldPassword = intent.getStringExtra("password");
-        final int user_id = intent.getIntExtra("user_id",0);
 
-        user_id_home = user_id;
-
+        // gets the user object that was sent from the user home page activity
+        user = (User) intent.getSerializableExtra("user");
 
 
         buttonPass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                // boolean flag that makes sure that the password that the user types in is valid
+
                 boolean noError = true;
 
 
-
+                // current password that the user enters
                 final String oldP = oldPass.getText().toString();
+                // new password that the user enters
                 final String newP = newPass.getText().toString();
+                // the new password again
                 final String confrimP = confirmNewPass.getText().toString();
 
-                 if(oldP.compareTo(oldPassword)!=0){
+                // if the user does not enter the correct current password
+                if (oldP.compareTo(user.getPassword()) != 0) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChangePasswordActivity.this);
-                    builder.setMessage("Wrong Current Password").setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Wrong Current Password").setNegativeButton("Retry", null).create().show();
 
                 }
 
 
-
-
-                else if(newP.length()<1){
+                // if the user does not enter a new password
+                else if (newP.length() < 1) {
                     noError = false;
                     AlertDialog.Builder builder = new AlertDialog.Builder(ChangePasswordActivity.this);
-                    builder.setMessage("Please Enter a New Password").setNegativeButton("Retry",null).create().show();
+                    builder.setMessage("Please Enter a New Password").setNegativeButton("Retry", null).create().show();
+
+                }
+
+                // if the new password is not at lease 6 chars
+                else if (newP.length() <= 5) {
+                    noError = false;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChangePasswordActivity.this);
+                    builder.setMessage("Password Must Contain at Least 6 Characters").setNegativeButton("Retry", null).create().show();
 
                 }
 
 
-                 else if(newP.length()<=5){
-                     noError = false;
-                     AlertDialog.Builder builder = new AlertDialog.Builder(ChangePasswordActivity.this);
-                     builder.setMessage("Password Must Contain at Least 6 Characters").setNegativeButton("Retry",null).create().show();
+                // if  the new password and the confirm password does not match
+                else if (newP.compareTo(confrimP) != 0) {
+                    noError = false;
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChangePasswordActivity.this);
+                    builder.setMessage("Passwords Do Not Match").setNegativeButton("Retry", null).create().show();
 
-                 }
-
-
-                 else if(newP.compareTo(confrimP)!=0){
-                     noError = false;
-                     AlertDialog.Builder builder = new AlertDialog.Builder(ChangePasswordActivity.this);
-                     builder.setMessage("Passwords Do Not Match").setNegativeButton("Retry",null).create().show();
-
-                 }
-
-
-
-
+                }
 
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
@@ -124,15 +134,22 @@ public class ChangePasswordActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+                            loadingDialog.hide();
+
                             JSONObject jsonResponse = new JSONObject(response);
 
                             boolean success = jsonResponse.getBoolean("success");
 
-                            if(success){
+                            if (success) {
                                 Intent intent = new Intent(ChangePasswordActivity.this, UserHomePageActivity.class);
-                                intent.putExtra("user_id", user_id);
-                                ChangePasswordActivity.this.startActivity(intent);
+                                // sets the new user password in the user object
+                                user.setPassword(newP);
+                                // sends the user object with the updated password to the user home page activity
+                                intent.putExtra("user", user);
 
+                                finish();
+
+                                ChangePasswordActivity.this.startActivity(intent);
 
 
                                 Toast toast = Toast.makeText(getApplicationContext(), "Password Has Been Changed.",
@@ -141,9 +158,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
                                 toast.show();
 
 
-                            }else{
+                            } else {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ChangePasswordActivity.this);
-                                builder.setMessage("User not Found").setNegativeButton("Retry",null).create().show();
+                                builder.setMessage("User not Found").setNegativeButton("Retry", null).create().show();
                             }
 
 
@@ -156,47 +173,22 @@ public class ChangePasswordActivity extends AppCompatActivity {
                 };
 
 
+                if (noError == true) {
+
+                    loadingDialog.show();
 
 
-                if(noError == true){
-                    ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(Integer.toString(user_id), newP, responseListener);
+                    ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest(Integer.toString(user.getUser_id()), newP, responseListener);
 
                     RequestQueue queue = Volley.newRequestQueue(ChangePasswordActivity.this);
-                    queue.add(changePasswordRequest);}
-
-
-
-
-
-
-
-
-
-
-
+                    queue.add(changePasswordRequest);
+                }
 
 
             }
 
 
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

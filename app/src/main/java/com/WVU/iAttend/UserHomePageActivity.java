@@ -220,6 +220,8 @@ public class UserHomePageActivity extends AppCompatActivity {
 
                 intent.putExtra("user", user);
 
+                finish();
+
 
                 UserHomePageActivity.this.startActivity(intent);
 
