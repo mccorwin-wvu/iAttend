@@ -213,7 +213,7 @@ public class MyClassesMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                CodeGenerator regCode = new CodeGenerator();
+                Functions regCode = new Functions();
                 final String newJoinCode = regCode.nextCode().toString();
 
 
@@ -269,7 +269,7 @@ public class MyClassesMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                CodeGenerator regCode = new CodeGenerator();
+                Functions regCode = new Functions();
                 final String newClassCode = regCode.nextCode().toString();
 
 

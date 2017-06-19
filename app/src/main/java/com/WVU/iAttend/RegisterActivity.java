@@ -20,9 +20,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class RegisterActivity extends AppCompatActivity {
 
     @Override
@@ -79,8 +76,8 @@ public class RegisterActivity extends AppCompatActivity {
                 // flag for checking the correctness of the field
                 boolean noError = true;
                 // object to generate the code to be sent to the users email
-                CodeGenerator regCode = new CodeGenerator();
-                // fields that the user has filled out except the register code, that is filled by the CodeGenerator object
+                Functions regCode = new Functions();
+                // fields that the user has filled out except the register code, that is filled by the Functions object
                 final String first_name = firstNameText.getText().toString();
                 final String last_name = lastNameText.getText().toString();
                 final String email = emailText.getText().toString();

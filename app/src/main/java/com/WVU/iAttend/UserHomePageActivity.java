@@ -23,6 +23,7 @@ import org.json.JSONObject;
 public class UserHomePageActivity extends AppCompatActivity {
     private boolean toMannyClasses = false;
     private User user;
+    private int user_id;
     private String androidID;
 
 
@@ -88,6 +89,7 @@ public class UserHomePageActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         user = (User) intent.getSerializableExtra("user");
+        user_id = intent.getIntExtra("user_id",0);
 
         // gets the android id of that current phone
 
@@ -122,6 +124,66 @@ public class UserHomePageActivity extends AppCompatActivity {
         } else {
             deviceID = "";
         }
+
+        if(user == null){
+
+            loadingDialog.show();
+
+
+            Response.Listener<String> responseListener = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+
+
+                    try {
+                        JSONObject jsonResponse = new JSONObject(response);
+                        boolean success = jsonResponse.getBoolean("success");
+
+                        if (success) {
+
+
+                            User user = new User(jsonResponse.getInt("user_id"), jsonResponse.getString("first_name"), jsonResponse.getString("last_name"), jsonResponse.getString("email"), jsonResponse.getString("password")
+                                    , jsonResponse.getInt("confirmed"), jsonResponse.getString("register_code"), jsonResponse.getString("device_code"), jsonResponse.getString("admin_class_list"), jsonResponse.getString("user_class_list"));
+
+
+                            Intent intent = new Intent(UserHomePageActivity.this, UserHomePageActivity.class);
+
+                            intent.putExtra("user", user);
+
+                            loadingDialog.hide();
+
+                            finish();
+
+                            UserHomePageActivity.this.startActivity(intent);
+
+
+
+
+
+                        } else {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(UserHomePageActivity.this);
+                            builder.setMessage("Refresh Fail").setNegativeButton("Retry", null).create().show();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+
+                    }
+
+
+                }
+            };
+
+
+            DataRequest dataRequest = new DataRequest(Integer.toString(user_id), responseListener);
+            RequestQueue queue = Volley.newRequestQueue(UserHomePageActivity.this);
+            queue.add(dataRequest);
+
+
+
+        }
+
+
 
 
         // gets updated data from the server and restarts the  user home page activity with the new data
@@ -450,7 +512,7 @@ public class UserHomePageActivity extends AppCompatActivity {
                 } else {
                     Intent intent = new Intent(UserHomePageActivity.this, CreateAClassActivity.class);
 
-                    intent.putExtra("user_id", user.getUser_id());
+                    intent.putExtra("user", user);
 
 
                     UserHomePageActivity.this.startActivity(intent);

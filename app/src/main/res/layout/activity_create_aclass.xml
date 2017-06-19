@@ -127,7 +127,7 @@
                 android:id="@+id/radioGroup"
                >
 
-                <RadioButton
+                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:text="Mon"
@@ -135,7 +135,7 @@
                     android:id="@+id/radioButtonMon"
                     android:checked="false"
                     android:textSize="4dp" />
-                <RadioButton
+                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:text="Tues"
@@ -143,7 +143,7 @@
                     android:id="@+id/radioButtonTues"
                     android:checked="false"
                     android:textSize="4dp" />
-                <RadioButton
+                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:text="Wed"
@@ -151,7 +151,7 @@
                     android:id="@+id/radioButtonWed"
                     android:checked="false"
                     android:textSize="4dp" />
-                <RadioButton
+                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:text="Thurs"
@@ -159,7 +159,7 @@
                     android:id="@+id/radioButtonThurs"
                     android:checked="false"
                     android:textSize="4dp" />
-                <RadioButton
+                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:text="Fri"
@@ -167,7 +167,7 @@
                     android:id="@+id/radioButtonFri"
                     android:checked="false"
                     android:textSize="4dp" />
-                <RadioButton
+                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:text="Sat"
@@ -176,7 +176,7 @@
                     android:checked="false"
                     android:textSize="4dp" />
 
-                <RadioButton
+                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
                     android:text="Sun"

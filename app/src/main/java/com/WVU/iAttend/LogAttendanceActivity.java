@@ -40,6 +40,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
+import static com.WVU.iAttend.Functions.CheckZone;
+import static com.WVU.iAttend.Functions.checkCords;
 import static com.WVU.iAttend.R.id.progressBar2;
 
 public class LogAttendanceActivity extends AppCompatActivity {
@@ -429,77 +431,6 @@ public class LogAttendanceActivity extends AppCompatActivity {
             default:
                 break;
         }
-    }
-
-
-    static public boolean checkCords(double lat, double log, double classLat, double classLog) {
-
-
-        if ((Math.abs(lat - classLat) < 000.001) && (Math.abs(log - classLog) < 000.001)) {
-            return true;
-        }
-
-        return false;
-
-
-    }
-
-
-    private static DateTime getInternetTime() {
-
-
-        try {
-            TimeTCPClient client = new TimeTCPClient();
-            try {
-
-                // Set timeout of 60 seconds
-                client.setDefaultTimeout(60000);
-                // Connecting to time server
-                // Other time servers can be found at : http://tf.nist.gov/tf-cgi/servers.cgi#
-                // Make sure that your program NEVER queries a server more frequently than once every 4 seconds
-                client.connect("nist1-macon.macon.ga.us");
-                DateTime returnDateTime = new DateTime(client.getDate());
-                return returnDateTime;
-
-            } finally {
-                client.disconnect();
-            }
-        } catch (IOException e) {
-
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-
-    private static boolean CheckZone(double lat, double log) {
-
-
-        DateTime now = getInternetTime();
-        DateTime nowDevice = new DateTime();
-
-        System.out.println(TimeZoneMapper.latLngToTimezoneString(lat, log));
-        System.out.println(nowDevice.getZone().toString());
-        System.out.println(nowDevice.toString());
-
-        if (nowDevice.getZone().toString().compareTo(TimeZoneMapper.latLngToTimezoneString(lat, log)) == 0) {
-
-
-            DateTime estZone = nowDevice.withZone(DateTimeZone.forTimeZone(TimeZone.getTimeZone("America/New_York")));
-
-            if (Math.abs((now.getMillis() / 1000) - (estZone.getMillis() / 1000)) < 180) {
-
-                return true;
-
-            }
-
-
-        } else {
-            return false;
-        }
-        return false;
-
-
     }
 
 

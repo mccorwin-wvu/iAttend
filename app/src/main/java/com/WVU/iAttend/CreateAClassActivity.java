@@ -2,7 +2,6 @@ package com.WVU.iAttend;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -12,7 +11,6 @@ import android.location.LocationManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringDef;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,9 +23,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -40,40 +38,53 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 
-import static android.location.LocationManager.GPS_PROVIDER;
-import static android.location.LocationManager.NETWORK_PROVIDER;
+import static com.WVU.iAttend.Functions.hideSoftKeyboard;
 
 
 public class CreateAClassActivity extends AppCompatActivity {
 
+
+    // user object
+    private User user;
+
+    // latitude and longitude variables
     private double log = 0;
     private double lat = 0;
 
-    private int user_id_home;
-    CodeGenerator regCode = new CodeGenerator();
-    private String joinCodeCode = regCode.nextCode().toString();
 
-    private double updatedLog = 0;
-    private double updatedLat = 0;
+    // code generator for the Join code
+    private String joinCodeCode = Functions.nextCode();
 
 
-    private boolean permissionGranted = false;
+    // location object for the gps
+    private Location locationGPS;
 
-    private Criteria criteria;
-    private String bestProvider;
 
+    // location object for the network
+    private Location locationNET;
+
+
+
+    // location manager object
     private LocationManager locationManager;
-    private LocationListener locationListener;
 
 
+    // two location listeners in case a gps signal is not avaialbe it will use the network
+
+    // location listener for the gps
+    private LocationListener locationListenerGPS;
+
+    // location listener for the network
+    private LocationListener locationListenerNET;
+
+    // send the user back to the user home page
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(CreateAClassActivity.this, UserHomePageActivity.class);
-        intent.putExtra("user_id", user_id_home);
+        intent.putExtra("user", user);
+        finish();
         CreateAClassActivity.this.startActivity(intent);
 
         //super.onBackPressed();
@@ -89,10 +100,12 @@ public class CreateAClassActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        final int user_id = intent.getIntExtra("user_id", 0);
 
-        user_id_home = user_id;
+        // gets the user object from the home page
 
+        user = (User) intent.getSerializableExtra("user");
+
+        // setting the font for all the text
 
         Typeface mytypeface = Typeface.createFromAsset(getAssets(), "Minecraftia-Regular.ttf");
 
@@ -111,20 +124,22 @@ public class CreateAClassActivity extends AppCompatActivity {
         TextView DaysOfTheWeekTextv = (TextView) findViewById(R.id.DaysOfTheWeekText);
         DaysOfTheWeekTextv.setTypeface(mytypeface);
 
-        TextView radioButtonMonv = (TextView) findViewById(R.id.radioButtonMon);
-        TextView radioButtonTuesv = (TextView) findViewById(R.id.radioButtonTues);
-        TextView radioButtonWedv = (TextView) findViewById(R.id.radioButtonWed);
-        TextView radioButtonThursv = (TextView) findViewById(R.id.radioButtonThurs);
-        TextView radioButtonFriv = (TextView) findViewById(R.id.radioButtonFri);
-        TextView radioButtonSatv = (TextView) findViewById(R.id.radioButtonSat);
-        TextView radioButtonSunv = (TextView) findViewById(R.id.radioButtonSun);
-        radioButtonMonv.setTypeface(mytypeface);
-        radioButtonTuesv.setTypeface(mytypeface);
-        radioButtonWedv.setTypeface(mytypeface);
-        radioButtonThursv.setTypeface(mytypeface);
-        radioButtonFriv.setTypeface(mytypeface);
-        radioButtonSatv.setTypeface(mytypeface);
-        radioButtonSunv.setTypeface(mytypeface);
+
+
+        TextView buttonMonv = (TextView) findViewById(R.id.radioButtonMon);
+        TextView buttonTuesv = (TextView) findViewById(R.id.radioButtonTues);
+        TextView buttonWedv = (TextView) findViewById(R.id.radioButtonWed);
+        TextView buttonThursv = (TextView) findViewById(R.id.radioButtonThurs);
+        TextView buttonFriv = (TextView) findViewById(R.id.radioButtonFri);
+        TextView buttonSatv = (TextView) findViewById(R.id.radioButtonSat);
+        TextView buttonSunv = (TextView) findViewById(R.id.radioButtonSun);
+        buttonMonv.setTypeface(mytypeface);
+        buttonTuesv.setTypeface(mytypeface);
+        buttonWedv.setTypeface(mytypeface);
+        buttonThursv.setTypeface(mytypeface);
+        buttonFriv.setTypeface(mytypeface);
+        buttonSatv.setTypeface(mytypeface);
+        buttonSunv.setTypeface(mytypeface);
 
 
         TextView StartDayTextv = (TextView) findViewById(R.id.StartDayText);
@@ -152,36 +167,72 @@ public class CreateAClassActivity extends AppCompatActivity {
         createButtonv.setTypeface(mytypeface);
 
 
-        final EditText className = (EditText) findViewById(R.id.ClassName);
+        // setting variables for all the buttons/edittext/switches
+
+        final EditText className = (EditText) ClassNamev;
         final TimePicker startTimePicker = (TimePicker) findViewById(R.id.StarttimePicker);
         final TimePicker endTimePicker = (TimePicker) findViewById(R.id.endtimePicker);
-        final RadioButton mon = (RadioButton) findViewById(R.id.radioButtonMon);
-        final RadioButton tues = (RadioButton) findViewById(R.id.radioButtonTues);
-        final RadioButton wed = (RadioButton) findViewById(R.id.radioButtonWed);
-        final RadioButton thurs = (RadioButton) findViewById(R.id.radioButtonThurs);
-        final RadioButton fri = (RadioButton) findViewById(R.id.radioButtonFri);
-        final RadioButton sat = (RadioButton) findViewById(R.id.radioButtonSat);
-        final RadioButton sun = (RadioButton) findViewById(R.id.radioButtonSun);
+        final CheckBox mon = (CheckBox) buttonMonv;
+        final CheckBox tues = (CheckBox) buttonTuesv;
+        final CheckBox wed = (CheckBox) buttonWedv;
+        final CheckBox thurs = (CheckBox) buttonThursv;
+        final CheckBox fri = (CheckBox) buttonFriv;
+        final CheckBox sat = (CheckBox) buttonSatv;
+        final CheckBox sun = (CheckBox) buttonSunv;
         final DatePicker startDate = (DatePicker) findViewById(R.id.StartDayPicker);
         final DatePicker endDate = (DatePicker) findViewById(R.id.EndDatePicker);
-        final TextView joinCode = (TextView) findViewById(R.id.JoinCode);
-        final Button setLocationButton = (Button) findViewById(R.id.LocationButton);
-        final Switch locationSwitch = (Switch) findViewById(R.id.LocationSwitch);
-        final Switch codeSwitch = (Switch) findViewById(R.id.CodeSwitch);
-        final Button createButton = (Button) findViewById(R.id.createButton);
+        final TextView joinCode = JoinCodev;
+        final Button setLocationButton = (Button) LocationButtonv;
+        final Switch locationSwitch = (Switch) LocationSwitchv;
+        final Switch codeSwitch = (Switch) CodeSwitchv;
+        final Button createButton = (Button) createButtonv;
 
 
-
-
+        // setting a location manager
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-        locationListener = new LocationListener() {
+        // overriding the locationListener methods to customise them for this acvtivity
+
+        locationListenerGPS = new LocationListener() {
+
+            // when the locationListener senses a change in coordinates it sets the 'locationGPS' to the new coordinates
+
             @Override
             public void onLocationChanged(Location location) {
 
-                updatedLog= location.getLongitude();
-                updatedLat = location.getLatitude();
+                locationGPS = location;
+
+
+            }
+
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String provider) {
+
+            }
+
+            // if the locationListener senses that the gps is disabled on the device then it will take the use directly to the setting menu to enable the gps
+
+            @Override
+            public void onProviderDisabled(String provider) {
+                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivity(i);
+
+            }
+        };
+
+        // this method is exactly the same as locationListenerGPS but it will be used when requesting for the coordinates using the phones network
+
+        locationListenerNET = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+
+                locationNET = location;
 
 
             }
@@ -205,41 +256,67 @@ public class CreateAClassActivity extends AppCompatActivity {
         };
 
 
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.INTERNET}
-                        ,10);
+        // this if else sequence is used to detect if the correct permissions are granted and if the devices SDK is 24 or higher it will run the request permissions method
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+
+            // checks to see if the fine location permission is granted and if the coarse location permission is granted
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+
+                // if one of those permissions is not granted then it will call the requestPermissions method with a string array filled with the permissions and a code for the switch statement
+
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 10);
+
             }
-            return;
+
+            // if both of the permissions are granted then it will call the getLocation method
+
+            else{
+                getLocation();
+            }
         }
+
+        // if the devices SDK is 23 or lower it will directly call the getLocation method
+
         else{
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1, 0, locationListener);
+
+            getLocation();
 
         }
 
-
-
-        if(updatedLat == 0 || updatedLog == 0){
-            locationManager.requestLocationUpdates(NETWORK_PROVIDER, 1, 0, locationListener);
-        }
-
+        // sets the start date on the date date picker to the current time
 
         startDate.setMinDate(System.currentTimeMillis() - 1000);
+
+        // sets the text of the join code text view
 
         joinCode.setText(joinCodeCode);
 
 
+        // listener for the get location button, this sets the log and lat variables to the GPS or NETWORK location depending on which is available
 
         setLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                // if the lat and log of the locationGPS variable is not '0' then it will set lat and log to the gps lat and log
 
-                log = updatedLog;
-                lat = updatedLat;
+                if(locationGPS.getLongitude() != 0 && locationGPS.getLatitude() !=0 ){
+                    lat = locationGPS.getLatitude();
+                    log = locationGPS.getLongitude();
+                }
+
+                // else it will use the NETWORK lat and log
+
+                else{
+                    lat = locationNET.getLatitude();
+                    log = locationNET.getLongitude();
+                }
 
 
-
+                // displays the coordinates in a toast
 
                 Toast toast = Toast.makeText(getApplicationContext(), "Longitude = " + log + "\n Latitude = " + lat,
                         Toast.LENGTH_SHORT);
@@ -252,32 +329,50 @@ public class CreateAClassActivity extends AppCompatActivity {
 
         });
 
+
+        // create button listener that sends all the data to the server and creates the class
+
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-
+                // setting the class name
                 final String classNameFinal = className.getText().toString();
+                // storing the start time and end time in a variable as 'HOUR$MIN'
                 final String startTimeFinal = Integer.toString(startTimePicker.getCurrentHour()) +"$"+ Integer.toString(startTimePicker.getCurrentMinute());
                 final String endTimeFinal = Integer.toString(endTimePicker.getCurrentHour()) +"$"+ Integer.toString(endTimePicker.getCurrentMinute());
-                String daysFinal ="";
+                // a variable for the days that the class is active
+                String daysFinal = "";
+                // storing the start date and end date in a variable as 'MONTH$DAY$YEAR'
                 final String startDayFinal=Integer.toString(startDate.getDayOfMonth())+"$"+Integer.toString(startDate.getMonth()+1)+"$"+Integer.toString(startDate.getYear());
                 final String endDayFinal=Integer.toString(endDate.getDayOfMonth())+"$"+Integer.toString(endDate.getMonth()+1)+"$"+Integer.toString(endDate.getYear());
+                // join code variable
                 final String joinCodeFinal = joinCodeCode;
+                // variable for log and lat
                 final String logFinal = Double.toString(log);
                 final String latFinal = Double.toString(lat);
+                // location and code variables stored as '1 = enabled, 0 = disabled'
                 final String locationEnabled;
                 final String codeEnabled;
-                final String admin_id = Integer.toString(user_id);
+                // variable for the id of the use that created the class
+                final String admin_id = Integer.toString(user.getUser_id());
+                // empty string for the class roster
                 final String classRosterFinal = "";
-                final String current_code = regCode.nextCode().toString();
-
+                // current code to log attendance
+                final String current_code = Functions.nextCode();
+                // boolean to for checking the user input
                 boolean noError = true;
+                // sets the string for the days that the class is in session, if the days are mon tues wed then the string would read mon$tues$wed
                 if(mon.isChecked()){daysFinal = daysFinal.concat("mon$");}if(tues.isChecked()){daysFinal = daysFinal.concat("tues$");}if(wed.isChecked()){daysFinal = daysFinal.concat("wed$");}if(thurs.isChecked()){daysFinal = daysFinal.concat("thurs$");}if(fri.isChecked()){daysFinal = daysFinal.concat("fri$");}if(sat.isChecked()){daysFinal = daysFinal.concat("sat$");}if(sun.isChecked()){daysFinal = daysFinal.concat("sun$");}
+                // two calendar objects to store the start date and end date
                 Calendar startDateCal = Calendar.getInstance();
                 Calendar endDateCal = Calendar.getInstance();
+                // set the start date and end date
                 startDateCal.set(startDate.getYear(), startDate.getMonth(), startDate.getDayOfMonth());
                 endDateCal.set(endDate.getYear(), endDate.getMonth(), endDate.getDayOfMonth());
+
+                // makes sure that the start date is at least 7 days apart from the end date, 604800000 is the number of milliseconds in a week
+
 
                 if(endDateCal.getTimeInMillis() - startDateCal.getTimeInMillis() < 604800000){
 
@@ -286,22 +381,26 @@ public class CreateAClassActivity extends AppCompatActivity {
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
 
-                    noError = true;
+                    noError = false;
                     return;
 
                 }
 
+                // makes sure that at least 1 char is entered for the name
+
                 if(classNameFinal.length()<=0){
 
-                    Toast toast = Toast.makeText(getApplicationContext(), "Every Class Needs a Name.",
+                    Toast toast = Toast.makeText(getApplicationContext(), "Must Enter a Name for the Class.",
                             Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
 
-                    noError = true;
+                    noError = false;
                     return;
 
                 }
+
+                // makes sure that 1 day is picked for when the class is in session
 
                 if(daysFinal.compareTo("") == 0){
 
@@ -310,13 +409,13 @@ public class CreateAClassActivity extends AppCompatActivity {
                     toast.setGravity(Gravity.CENTER, 0, 0);
                     toast.show();
 
-                    noError = true;
+                    noError = false;
                     return;
 
                 }
 
 
-
+                // setting the location switch, 1 = enabled 0 = disabled
 
                 if(locationSwitch.isChecked()){
                     locationEnabled = "1";
@@ -325,6 +424,8 @@ public class CreateAClassActivity extends AppCompatActivity {
                     locationEnabled = "0";
                 }
 
+                // setting code switch, 1 = enabled 0 = disabled
+
                 if(codeSwitch.isChecked()){
                     codeEnabled = "1";
                 }
@@ -332,10 +433,18 @@ public class CreateAClassActivity extends AppCompatActivity {
                     codeEnabled = "0";
                 }
 
-                DateStuff dateStuff = new DateStuff();
 
-                String dates = dateStuff.getDays(startDayFinal,endDayFinal,daysFinal);
+
+                // uses the function getDays to return a string days that the class is in session, they are formatted as so "day$month$year-day$month$year-"
+
+                String dates = Functions.getDays(startDayFinal,endDayFinal,daysFinal);
+
+                // counts the number of in the session by splitting the dates string and getting the length of the array
+
                 String numberOfDays = Integer.toString(dates.split("-").length);
+
+
+                // response from the database determining if the class was successfully created
 
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
@@ -346,22 +455,26 @@ public class CreateAClassActivity extends AppCompatActivity {
 
                             boolean success = jsonResponse.getBoolean("success");
 
+                            // if success then the user is sent back to the user home page
+
                             if(success){
                                 Intent intent = new Intent(CreateAClassActivity.this, UserHomePageActivity.class);
-
-
-
 
                                 Toast toast = Toast.makeText(getApplicationContext(), "Class created.",
                                         Toast.LENGTH_LONG);
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
 
-                                intent.putExtra("user_id", user_id);
+                                intent.putExtra("user", user.getUser_id());
 
                                 CreateAClassActivity.this.startActivity(intent);
 
-                            }else{
+
+
+
+                            }
+                            // else and error message is printed
+                            else{
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CreateAClassActivity.this);
                                 builder.setMessage("Error, Class not Created").setNegativeButton("Retry",null).create().show();
                             }
@@ -377,6 +490,7 @@ public class CreateAClassActivity extends AppCompatActivity {
 
 
 
+                // if there is no error on input then they data is sent to the server
 
                 if(noError == true){
                     CreateAClassRequest createAClassRequest = new CreateAClassRequest(classNameFinal,startTimeFinal,endTimeFinal,daysFinal, startDayFinal, endDayFinal, joinCodeFinal,
@@ -401,27 +515,39 @@ public class CreateAClassActivity extends AppCompatActivity {
 
 
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
             case 10:
+                if(grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
-                locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 0, locationListener);
+                    getLocation();
+                }
 
-                break;
-            default:
-                break;
+
+
         }
     }
 
+    // calls request location updates for both network and gps
 
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager =
-                (InputMethodManager) activity.getSystemService(
-                        Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(
-                activity.getCurrentFocus().getWindowToken(), 0);
+    private void getLocation(){
+
+
+        // request location updates from gps every second and calls the locationListenerGPS
+
+        locationManager.requestLocationUpdates(locationManager.GPS_PROVIDER, 1000, 0, locationListenerGPS);
+
+        // request location updates from network every second and calls the locationListenerNET
+
+        locationManager.requestLocationUpdates(locationManager.NETWORK_PROVIDER, 1000, 0, locationListenerNET);
+
+
+
     }
+
+    // hides the soft keyboard when tapping anywhere outside the class name box
 
     public void setupUI(View view) {
 
