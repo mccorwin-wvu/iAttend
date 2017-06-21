@@ -2,6 +2,7 @@ package com.WVU.iAttend;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
@@ -188,6 +189,14 @@ public class CreateAClassActivity extends AppCompatActivity {
         final Button createButton = (Button) createButtonv;
 
 
+        final ProgressDialog loadingDialog = new ProgressDialog(CreateAClassActivity.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.setIndeterminate(true);
+        loadingDialog.setTitle("Loading......");
+        loadingDialog.setMessage("Please Wait");
+
+
+
         // setting a location manager
 
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -303,17 +312,18 @@ public class CreateAClassActivity extends AppCompatActivity {
 
                 // if the lat and log of the locationGPS variable is not '0' then it will set lat and log to the gps lat and log
 
-                if(locationGPS.getLongitude() != 0 && locationGPS.getLatitude() !=0 ){
+                if(locationGPS != null && locationGPS.getLongitude() != 0 && locationGPS.getLatitude() !=0 ){
                     lat = locationGPS.getLatitude();
                     log = locationGPS.getLongitude();
                 }
 
                 // else it will use the NETWORK lat and log
 
-                else{
+                else if (locationNET != null){
                     lat = locationNET.getLatitude();
                     log = locationNET.getLongitude();
                 }
+
 
 
                 // displays the coordinates in a toast
@@ -335,6 +345,8 @@ public class CreateAClassActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
 
                 // setting the class name
                 final String classNameFinal = className.getText().toString();
@@ -451,6 +463,9 @@ public class CreateAClassActivity extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         try {
+
+                            loadingDialog.hide();
+
                             JSONObject jsonResponse = new JSONObject(response);
 
                             boolean success = jsonResponse.getBoolean("success");
@@ -465,7 +480,9 @@ public class CreateAClassActivity extends AppCompatActivity {
                                 toast.setGravity(Gravity.CENTER, 0, 0);
                                 toast.show();
 
-                                intent.putExtra("user", user.getUser_id());
+                                intent.putExtra("user_id", user.getUser_id());
+
+                                finish();
 
                                 CreateAClassActivity.this.startActivity(intent);
 
@@ -493,6 +510,9 @@ public class CreateAClassActivity extends AppCompatActivity {
                 // if there is no error on input then they data is sent to the server
 
                 if(noError == true){
+
+                    loadingDialog.show();
+
                     CreateAClassRequest createAClassRequest = new CreateAClassRequest(classNameFinal,startTimeFinal,endTimeFinal,daysFinal, startDayFinal, endDayFinal, joinCodeFinal,
                             logFinal, latFinal, locationEnabled, codeEnabled, admin_id, classRosterFinal, dates, numberOfDays, current_code, responseListener);
 

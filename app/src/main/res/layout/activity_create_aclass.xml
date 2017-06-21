@@ -44,26 +44,11 @@
             android:weightSum="1">
 
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:textSize="20dp"
-                android:id="@+id/ClassName"
-                android:hint="Class Name:"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textColorHint="@color/colorAccent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/StartTimeText"
                 android:text="Start Time"
                 android:textColor="@android:color/holo_orange_dark"
@@ -86,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/endTImeText"
                 android:text="End Time"
                 android:textColor="@android:color/holo_orange_dark"
@@ -107,7 +92,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/DaysOfTheWeekText"
                 android:text="Days Of the Week"
                 android:textColor="@android:color/holo_orange_dark"
@@ -134,7 +119,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonMon"
                     android:checked="false"
-                    android:textSize="4dp" />
+                    android:textSize="7sp" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -142,7 +127,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonTues"
                     android:checked="false"
-                    android:textSize="4dp" />
+                    android:textSize="7sp" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -150,7 +135,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonWed"
                     android:checked="false"
-                    android:textSize="4dp" />
+                    android:textSize="7sp" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -158,7 +143,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonThurs"
                     android:checked="false"
-                    android:textSize="4dp" />
+                    android:textSize="7sp" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -166,7 +151,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonFri"
                     android:checked="false"
-                    android:textSize="4dp" />
+                    android:textSize="7sp" />
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
@@ -174,7 +159,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonSat"
                     android:checked="false"
-                    android:textSize="4dp" />
+                    android:textSize="7sp" />
 
                 <CheckBox
                     android:layout_width="wrap_content"
@@ -183,7 +168,7 @@
                     android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonSun"
                     android:checked="false"
-                    android:textSize="4dp" />
+                    android:textSize="7sp" />
 
 
             </LinearLayout>
@@ -193,7 +178,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/StartDayText"
                 android:text="Start Day"
                 android:textColor="@android:color/holo_orange_dark"
@@ -215,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/EndDayText"
                 android:text="End Day"
                 android:textColor="@android:color/holo_orange_dark"
@@ -242,7 +227,7 @@
                     android:layout_width="119dp"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:id="@+id/JoinCodeText"
                     android:text="Join Code: "
                     android:textColor="@android:color/holo_orange_dark"
@@ -256,7 +241,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:id="@+id/JoinCode"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textColorHint="@color/colorAccent"
@@ -277,7 +262,7 @@
                 android:text="Set Location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/LocationButton"
                 android:paddingRight="30dp"
                 android:paddingLeft="30dp"
@@ -294,7 +279,7 @@
                 android:text="Location Verification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textColor="@android:color/holo_orange_dark"
                 android:id="@+id/LocationSwitch"
                 android:layout_marginTop="20dp"
@@ -307,15 +292,30 @@
                 android:textColor="@android:color/holo_orange_dark"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_marginBottom="20dp"
                 android:id="@+id/CodeSwitch" />
+
+            <EditText
+                android:id="@+id/ClassName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Class Name:"
+                android:inputType="textPersonName"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textColorHint="@color/colorAccent"
+                android:textSize="20sp" />
 
             <Button
                 android:text="Create"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/createButton"
                 android:paddingRight="30dp"
                 android:paddingLeft="30dp"
