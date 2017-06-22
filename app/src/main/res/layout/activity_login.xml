@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
                     android:ems="10"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_marginTop="54dp"
                     android:id="@+id/logingEmailBox"
                     android:hint="Email:"
@@ -47,22 +47,18 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:ems="10"
-                    android:textSize="20dp"
-                    android:layout_below="@+id/logingEmailBox"
-                    android:layout_centerHorizontal="true"
+                    android:textSize="20sp"
                     android:layout_marginTop="56dp"
                     android:id="@+id/logingPassBox"
-                    android:hint="Password:"
+                    android:hint="@string/password"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textColorHint="@color/colorAccent"/>
 
             <Button
-                android:text="Log In"
+                android:text="@string/log_in"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:textSize="25dp"
+                android:textSize="25sp"
                 android:id="@+id/logingButton"
                 android:paddingRight="30dp"
                 android:paddingLeft="30dp"
@@ -73,32 +69,28 @@
                 android:layout_marginBottom="0dp"/>
 
             <TextView
-                    android:text="Forgot Password"
+                    android:text="@string/forgot_password"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/forgotPasswordHomePage"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="0dp"/>
 
             <TextView
-                    android:text="Register"
+                    android:text="@string/register"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="21dp"
                     android:id="@+id/logingReg"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:layout_above="@+id/forgotPasswordHomePage"
-                    android:layout_centerHorizontal="true"
                     android:layout_marginTop="25dp"/>
 
         </LinearLayout>
     </ScrollView>
 
     <TextView
-        android:text="iAttend"
+        android:text="@string/iattend"
         android:id="@+id/iAttendText"
         android:textSize="45sp"
         android:layout_width="wrap_content"

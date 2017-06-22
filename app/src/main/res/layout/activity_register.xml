@@ -12,7 +12,7 @@
     android:background="@color/colorPrimaryDark">
 
     <TextView
-        android:text="Register"
+        android:text="@string/register"
         android:id="@+id/regText"
         android:textSize="30sp"
         android:layout_width="wrap_content"
@@ -47,27 +47,24 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/regFirstName"
-                android:hint="First Name:"
+                android:hint="@string/first_name"
                 android:layout_marginTop="20dp"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+                />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/regLastName"
-                android:hint="Last Name:"
+                android:hint="@string/last_name"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-                android:layout_below="@+id/regFirstName"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp" />
 
             <EditText
@@ -75,57 +72,49 @@
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/regEmail"
-                android:hint="Email:"
+                android:hint="@string/email"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
                 android:layout_marginTop="20dp"
-                android:layout_below="@+id/regLastName"
-                android:layout_alignParentStart="true" />
+                />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/regPassword"
-                android:hint="Password:"
+                android:hint="@string/password"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-
-                android:layout_below="@+id/regEmail"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:inputType="textPassword"
                 android:ems="10"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/regPasswordCon"
-                android:hint="Confirm Password:"
+                android:hint="@string/confirm_password"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-                android:layout_below="@+id/regPassword"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="20dp"
                 android:layout_height="wrap_content" />
 
             <Button
-                android:text="Register"
+                android:text="@string/register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:id="@+id/regButton"
                 android:paddingRight="30dp"
                 android:paddingLeft="30dp"
                 android:paddingTop="10dp"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/colorAccent"
-                android:layout_below="@+id/regPasswordCon"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="25dp"
                 />
 

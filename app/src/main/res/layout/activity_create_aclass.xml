@@ -1,173 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.WVU.iAttend.RegisterActivity"
-    android:background="@color/colorPrimaryDark">
+    tools:context="com.WVU.iAttend.RegisterActivity">
 
     <TextView
-        android:text="Create-A-Class"
         android:id="@+id/createAClassText"
-        android:textSize="30sp"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:layout_marginTop="4dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColorLink="@android:color/holo_blue_bright"
+        android:layout_marginTop="4dp"
+        android:text="@string/create_a_class"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@android:color/holo_orange_dark"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:textAllCaps="false" />
+        android:textColorLink="@android:color/holo_blue_bright"
+        android:textSize="30sp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_marginTop="18dp"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/createAClassText"
-        android:layout_alignParentStart="true">
+        android:layout_marginTop="18dp"
+        android:fillViewport="true">
 
 
         <LinearLayout
+            android:id="@+id/createAClassParr"
             android:layout_width="match_parent"
-            android:orientation="vertical"
             android:layout_height="wrap_content"
             android:focusable="true"
-            android:id="@+id/createAClassParr"
             android:focusableInTouchMode="true"
+            android:orientation="vertical"
             android:weightSum="1">
 
 
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:textSize="20sp"
                 android:id="@+id/StartTimeText"
-                android:text="Start Time"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textColorHint="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"/>
-
-            <TimePicker
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:timePickerMode="spinner"
-                android:headerBackground="@color/colorAccent"
-                android:layout_marginTop="0dp"
-                android:layout_marginBottom="20dp"
-                android:id="@+id/StarttimePicker" />
-
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:textSize="20sp"
-                android:id="@+id/endTImeText"
-                android:text="End Time"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textColorHint="@color/colorAccent"
-                android:layout_marginTop="0dp"
                 android:layout_marginBottom="5dp"
-                android:layout_below="@+id/regLastName"
-                android:layout_alignParentStart="true" />
-
-            <TimePicker
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:timePickerMode="spinner"
-                android:headerBackground="@color/colorAccent"
-                android:id="@+id/endtimePicker" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:ems="10"
-                android:textSize="20sp"
-                android:id="@+id/DaysOfTheWeekText"
-                android:text="Days Of the Week"
+                android:text="@string/start_time"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-                android:layout_below="@+id/regEmail"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp" />
+                android:textSize="20sp" />
+
+            <TimePicker
+                android:id="@+id/StarttimePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="0dp"
+                android:headerBackground="@color/colorAccent"
+                android:timePickerMode="spinner" />
+
+
+            <TextView
+                android:id="@+id/endTImeText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="0dp"
+                android:ems="10"
+                android:text="@string/end_time"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textColorHint="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <TimePicker
+                android:id="@+id/endtimePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:headerBackground="@color/colorAccent"
+                android:timePickerMode="spinner" />
+
+            <TextView
+                android:id="@+id/DaysOfTheWeekText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:text="@string/days_of_the_week"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textColorHint="@color/colorAccent"
+                android:textSize="20sp" />
 
 
             <LinearLayout
+                android:id="@+id/radioGroup"
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="0dp"
                 android:layout_marginBottom="5dp"
-                android:weightSum="7"
+                android:layout_marginTop="0dp"
                 android:orientation="horizontal"
-                android:id="@+id/radioGroup"
-               >
+                android:weightSum="7">
 
                 <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="55dp"
-                    android:text="Mon"
-                    android:textColor="@android:color/holo_orange_dark"
                     android:id="@+id/radioButtonMon"
-                    android:checked="false"
-                    android:textSize="7sp" />
-                <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
-                    android:text="Tues"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:id="@+id/radioButtonTues"
                     android:checked="false"
-                    android:textSize="7sp" />
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="55dp"
-                    android:text="Wed"
+                    android:text="@string/mon"
                     android:textColor="@android:color/holo_orange_dark"
-                    android:id="@+id/radioButtonWed"
-                    android:checked="false"
-                    android:textSize="7sp" />
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="55dp"
-                    android:text="Thurs"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:id="@+id/radioButtonThurs"
-                    android:checked="false"
-                    android:textSize="7sp" />
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="55dp"
-                    android:text="Fri"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:id="@+id/radioButtonFri"
-                    android:checked="false"
-                    android:textSize="7sp" />
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="55dp"
-                    android:text="Sat"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:id="@+id/radioButtonSat"
-                    android:checked="false"
                     android:textSize="7sp" />
 
                 <CheckBox
+                    android:id="@+id/radioButtonTues"
                     android:layout_width="wrap_content"
                     android:layout_height="55dp"
-                    android:text="Sun"
-                    android:textColor="@android:color/holo_orange_dark"
-                    android:id="@+id/radioButtonSun"
                     android:checked="false"
+                    android:text="@string/tues"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="7sp" />
+
+                <CheckBox
+                    android:id="@+id/radioButtonWed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:checked="false"
+                    android:text="@string/wed"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="7sp" />
+
+                <CheckBox
+                    android:id="@+id/radioButtonThurs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:checked="false"
+                    android:text="@string/thurs"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="7sp" />
+
+                <CheckBox
+                    android:id="@+id/radioButtonFri"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:checked="false"
+                    android:text="@string/fri"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="7sp" />
+
+                <CheckBox
+                    android:id="@+id/radioButtonSat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:checked="false"
+                    android:text="@string/sat"
+                    android:textColor="@android:color/holo_orange_dark"
+                    android:textSize="7sp" />
+
+                <CheckBox
+                    android:id="@+id/radioButtonSun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="55dp"
+                    android:checked="false"
+                    android:text="@string/sun"
+                    android:textColor="@android:color/holo_orange_dark"
                     android:textSize="7sp" />
 
 
@@ -175,157 +175,135 @@
 
 
             <TextView
+                android:id="@+id/StartDayText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:ems="10"
-                android:textSize="20sp"
-                android:id="@+id/StartDayText"
-                android:text="Start Day"
+                android:text="@string/start_day"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-                android:layout_below="@+id/regEmail"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp" />
+                android:textSize="20sp" />
 
             <DatePicker
+                android:id="@+id/StartDayPicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:datePickerMode="spinner"
                 android:layout_marginBottom="20dp"
-                android:scaleY="1"
-                android:id="@+id/StartDayPicker" />
+                android:datePickerMode="spinner"
+                android:scaleY="1" />
 
 
             <TextView
+                android:id="@+id/EndDayText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:ems="10"
-                android:textSize="20sp"
-                android:id="@+id/EndDayText"
-                android:text="End Day"
+                android:text="@string/end_day"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-                android:layout_below="@+id/regEmail"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp" />
+                android:textSize="20sp" />
 
             <DatePicker
+                android:id="@+id/EndDatePicker"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:datePickerMode="spinner"
                 android:layout_marginBottom="20dp"
-                android:scaleY="1"
-                android:id="@+id/EndDatePicker" />
+                android:datePickerMode="spinner"
+                android:scaleY="1" />
 
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
 
                 <TextView
+                    android:id="@+id/JoinCodeText"
                     android:layout_width="119dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="20dp"
                     android:ems="10"
-                    android:textSize="20sp"
-                    android:id="@+id/JoinCodeText"
-                    android:text="Join Code: "
+                    android:text="@string/join_code"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textColorHint="@color/colorAccent"
-                    android:layout_below="@+id/regEmail"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginRight="10dp"/>
+                    android:textSize="20sp" />
 
                 <TextView
+                    android:id="@+id/JoinCode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:ems="10"
-                    android:textSize="20sp"
-                    android:id="@+id/JoinCode"
                     android:textColor="@android:color/holo_orange_dark"
                     android:textColorHint="@color/colorAccent"
-                    android:layout_below="@+id/regEmail"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginTop="20dp" />
-
-
-
-
-
-
-
+                    android:textSize="20sp" />
 
 
             </LinearLayout>
+
             <Button
-                android:text="Set Location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
                 android:id="@+id/LocationButton"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/set_location"
                 android:textColor="@color/colorAccent"
-                android:layout_below="@+id/regPasswordCon"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                />
+                android:textSize="20sp" />
 
             <Switch
-                android:text="Location Verification"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@android:color/holo_orange_dark"
                 android:id="@+id/LocationSwitch"
-                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_marginBottom="20dp"
-                android:layout_weight="2" />
+                android:layout_marginTop="20dp"
+                android:layout_weight="2"
+                android:text="@string/location_verification"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="20sp" />
 
             <Switch
-                android:text="Code Verification"
+                android:id="@+id/CodeSwitch"
                 android:layout_width="match_parent"
-                android:textColor="@android:color/holo_orange_dark"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:textSize="20sp"
                 android:layout_marginBottom="20dp"
-                android:id="@+id/CodeSwitch" />
+                android:layout_marginTop="20dp"
+                android:text="@string/code_verification"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/ClassName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:ems="10"
-                android:hint="Class Name:"
+                android:hint="@string/class_name"
                 android:inputType="textPersonName"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
                 android:textSize="20sp" />
 
             <Button
-                android:text="Create"
+                android:id="@+id/createButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:id="@+id/createButton"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent"
-                android:layout_below="@+id/regPasswordCon"
-                android:layout_alignParentStart="true"
                 android:layout_marginTop="25dp"
-                />
+                android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/create"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
 
 
         </LinearLayout>

@@ -4,50 +4,48 @@
     android:id="@+id/activity_user_home_page"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.WVU.iAttend.UserHomePageActivity"
-    android:background="@color/colorPrimaryDark">
-
-
+    tools:context="com.WVU.iAttend.UserHomePageActivity">
 
 
     <TextView
-        android:text="Home"
         android:id="@+id/user_home_text"
-        android:textSize="25sp"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textColorLink="@android:color/holo_blue_bright"
-        android:textColor="@android:color/holo_orange_dark"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:textAllCaps="false"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:text="@string/home"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textColorLink="@android:color/holo_blue_bright"
+        android:textSize="25sp" />
 
     <Button
-        android:text="Refresh"
+        android:id="@+id/user_home_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
-        android:id="@+id/user_home_refresh"
-        android:paddingRight="5dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="2dp"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/colorAccent"
-
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:background="@color/colorPrimary"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="2dp"
+        android:text="@string/refresh"
+
+        android:textColor="@color/colorAccent"
+        android:textSize="15sp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/user_home_refresh"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/user_home_refresh"
         android:layout_marginTop="13dp">
 
         <LinearLayout
@@ -56,113 +54,97 @@
             android:orientation="vertical">
 
             <Button
-                android:text="My Classes"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-                android:textSize="20dp"
                 android:id="@+id/UserHomeMyClasses"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent" />
-
-            <Button
-                android:text="Joined Classes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:textSize="20dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/my_classes"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <Button
                 android:id="@+id/UserHomeJoinedClasses"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent" />
-
-            <Button
-                android:text="Create A Class"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:textSize="20dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/joined_classes"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <Button
                 android:id="@+id/UserHomeCreateAClass"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
                 android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent" />
-
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/create_a_class"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
 
 
             <Button
-                android:text="Join A Class"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-                android:textSize="20dp"
                 android:id="@+id/UserHomeJoinAClass"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
                 android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent" />
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/join_a_class"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
 
 
             <Button
-                android:text="Register Device"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="50dp"
-                android:textSize="20dp"
                 android:id="@+id/UserHomeRegisterDevice"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent" />
-
-            <Button
-                android:text="Change Password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:textSize="20dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/register_device"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <Button
                 android:id="@+id/UserHomeChangePassword"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent" />
-
-            <Button
-                android:text="Logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
                 android:layout_marginBottom="50dp"
-                android:textSize="20dp"
-                android:id="@+id/UserHomeLogout"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="5dp"
                 android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent" />
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/change_password"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
 
+            <Button
+                android:id="@+id/UserHomeLogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="5dp"
+                android:text="@string/logout"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
 
 
         </LinearLayout>
