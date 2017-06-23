@@ -48,6 +48,7 @@
                 android:ems="10"
                 android:hint="@string/email"
                 android:inputType="textEmailAddress"
+                android:maxLength="29"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
                 android:textSize="20sp" />
@@ -60,6 +61,7 @@
                 android:ems="10"
                 android:hint="@string/code"
                 android:inputType="textVisiblePassword"
+                android:maxLength="29"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
                 android:textSize="20sp" />

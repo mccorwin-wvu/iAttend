@@ -4,119 +4,120 @@
     android:id="@+id/activity_register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.WVU.iAttend.RegisterActivity"
-    android:background="@color/colorPrimaryDark">
+    tools:context="com.WVU.iAttend.RegisterActivity">
 
     <TextView
-        android:text="@string/register"
         android:id="@+id/regText"
-        android:textSize="30sp"
+        style="@style/Widget.AppCompat.TextView.SpinnerItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:layout_marginTop="4dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:textColorLink="@android:color/holo_blue_bright"
+        android:layout_marginTop="4dp"
+        android:text="@string/register"
+        android:textAllCaps="false"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@android:color/holo_orange_dark"
-        style="@style/Widget.AppCompat.TextView.SpinnerItem"
-        android:textAllCaps="false" />
+        android:textColorLink="@android:color/holo_blue_bright"
+        android:textSize="30sp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_below="@+id/regText"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="18dp">
+        android:layout_below="@+id/regText"
+        android:layout_marginTop="18dp"
+        android:fillViewport="true">
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
             android:layout_height="wrap_content"
-            >
+            android:orientation="vertical">
 
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:textSize="20sp"
                 android:id="@+id/regFirstName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
                 android:hint="@string/first_name"
-                android:layout_marginTop="20dp"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textColorHint="@color/colorAccent"
-                />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:ems="10"
-                android:textSize="20sp"
+                android:maxLength="29"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textColorHint="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <EditText
                 android:id="@+id/regLastName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:ems="10"
                 android:hint="@string/last_name"
+                android:inputType="textPersonName"
+                android:maxLength="29"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-                android:layout_marginTop="20dp" />
+                android:textSize="20sp" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
-                android:textSize="20sp"
                 android:id="@+id/regEmail"
-                android:hint="@string/email"
-                android:textColor="@android:color/holo_orange_dark"
-                android:textColorHint="@color/colorAccent"
-                android:layout_marginTop="20dp"
-                />
-
-            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:layout_marginTop="20dp"
                 android:ems="10"
-                android:textSize="20sp"
-                android:id="@+id/regPassword"
-                android:hint="@string/password"
+                android:hint="@string/email"
+                android:inputType="textEmailAddress"
+                android:maxLength="29"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
-                android:layout_marginTop="20dp" />
+                android:textSize="20sp" />
 
             <EditText
+                android:id="@+id/regPassword"
                 android:layout_width="match_parent"
-                android:inputType="textPassword"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:ems="10"
-                android:textSize="20sp"
-                android:id="@+id/regPasswordCon"
-                android:hint="@string/confirm_password"
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:maxLength="15"
                 android:textColor="@android:color/holo_orange_dark"
                 android:textColorHint="@color/colorAccent"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/regPasswordCon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_height="wrap_content" />
+                android:ems="10"
+                android:hint="@string/confirm_password"
+                android:inputType="textPassword"
+                android:maxLength="15"
+                android:textColor="@android:color/holo_orange_dark"
+                android:textColorHint="@color/colorAccent"
+                android:textSize="20sp" />
 
             <Button
-                android:text="@string/register"
+                android:id="@+id/regButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:id="@+id/regButton"
-                android:paddingRight="30dp"
-                android:paddingLeft="30dp"
-                android:paddingTop="10dp"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorAccent"
                 android:layout_marginTop="25dp"
-                />
+                android:background="@color/colorPrimary"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:text="@string/register"
+                android:textColor="@color/colorAccent"
+                android:textSize="20sp" />
 
         </LinearLayout>
     </ScrollView>
